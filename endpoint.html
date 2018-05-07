@@ -1,0 +1,50 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue-router/dist/vue-router.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+        <p>
+            <!-- use router-link component for navigation. -->
+            <!-- specify the link by passing the `to` prop. -->
+            <!-- <router-link> will be rendered as an `<a>` tag by default -->
+            <router-link to="/foo">Go to Foo</router-link>
+            <router-link to="/bar">Go to Bar</router-link>
+        </p>
+        <!-- route outlet -->
+        <!-- component matched by the route will render here -->
+        <router-view></router-view>
+    </div>
+
+    <script>
+        // 1. Define route components.
+        // These can be imported from other files
+        const Foo = { template: '<div>foo</div>' }
+        const Bar = { template: '<div>bar</div>' }
+
+        // 2. Define some routes
+        // Each route should map to a component. The "component" can
+        // either be an actual component constructor created via
+        // Vue.extend(), or just a component options object.
+        // We'll talk about nested routes later.
+        const routes = [
+            { path: '/foo?first_name=xx', component: Foo },
+            { path: '/bar?first_name=yy', component: Bar }
+        ]
+        
+        const router = new VueRouter({
+            routes 
+        });
+        var app = new Vue({
+            router,
+            data: {
+                message: "KEYS:" + Object.keys(router).join("; ") + " :: "
+            }
+        }).$mount("#app");
+    </script>
+</body>
+</html>
