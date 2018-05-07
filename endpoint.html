@@ -7,13 +7,23 @@
 
 <body>
     <div id="app">
-        {{ message }}
+        <div class="a">
+            <div class="b">
+                <div class="c">
+                    <input v-model="search" placeholder="edit me">
+                </div>
+            </div>
+            <div class="d">
+                <span>Your input was: </span>
+                <span class="c">{{ search }}</span>
+            </div>
+        </div>
         <p>
             <!-- use router-link component for navigation. -->
             <!-- specify the link by passing the `to` prop. -->
             <!-- <router-link> will be rendered as an `<a>` tag by default -->
-            <router-link to="/foo">Go to Foo</router-link>
-            <router-link to="/bar">Go to Bar</router-link>
+            <router-link to="/user/foo?q1=v1">Go to Foo</router-link>
+            <router-link to="/user/bar?q2=v2">Go to Bar</router-link>
         </p>
         <!-- route outlet -->
         <!-- component matched by the route will render here -->
@@ -21,28 +31,30 @@
     </div>
 
     <script>
-        // 1. Define route components.
-        // These can be imported from other files
-        const Foo = { template: '<div>foo</div>' }
-        const Bar = { template: '<div>bar</div>' }
+        const User = {
+            template: 
+                '<div>User {{ $route.params.id }} x={{x}}, x^2={{x2}}<br/>' +
+                '<input v-model="input" placeholder="edit me">' +
+                '<p>Message is: {{ input }}</p></div>',
+            data: function() {
+                return {                
+                    x: "4",
+                    x2: "16",
+                    input: ""
+                }
+            }
+        }
 
-        // 2. Define some routes
-        // Each route should map to a component. The "component" can
-        // either be an actual component constructor created via
-        // Vue.extend(), or just a component options object.
-        // We'll talk about nested routes later.
-        const routes = [
-            { path: '/foo?first_name=xx', component: Foo },
-            { path: '/bar?first_name=yy', component: Bar }
-        ]
-        
         const router = new VueRouter({
-            routes 
-        });
+            routes: [
+                { path: '/user/:id', component: User }
+            ]
+        })
+        
         var app = new Vue({
             router,
             data: {
-                message: "KEYS:" + Object.keys(router).join("; ") + " :: "
+                search: ''
             }
         }).$mount("#app");
     </script>
