@@ -18,6 +18,7 @@
                 border-color: violet
             }
         </style>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     </head>
     <body>
         <div class="a">
@@ -48,5 +49,22 @@
                 </div>
             </div>
         </div>
+        <div id="app">
+            <div>{{ message }}</div>
+            <button v-on:click="increment">+1</button>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    message: 0
+                },
+                methods: {
+                    increment: function () {
+                        this.message = this.message + 1;
+                    }
+                }        
+            })
+        </script>
     </body>
 </html>
