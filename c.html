@@ -1,6 +1,19 @@
 <html>
     <head>
         <style>
+            button {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+            
             div {
                 border-width: 5px;
                 border-style: solid                
@@ -9,21 +22,45 @@
                 border-color: red
             }
             .b {
-                border-color: green
+                background-color: green
             }
             .c {
-                border-color: blue
+                background-color: blue
             }
             .x {
-                border-color: violet
+                background-color: violet
             }
         </style>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     </head>
     <body>
-        <div class="a">
-            <div class="c">A</div>
-            <div class="b">A</div>
-            <div class="b">other text</div>
+        <div id="app">
+            <div class="a">
+                <div><button class="c" v-on:click="increment0">A</button><span>{{v0}}</span></div>
+                <div><button class="b" v-on:click="increment1">A</button><span>{{v1}}</span></div>
+                <div><button class="b" v-on:click="increment2">other text</button><span>{{v2}}</span></div>
+            </div>
         </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    v0: 0,
+                    v1: 0,
+                    v2: 0
+                },
+                methods: {
+                    increment0: function () {
+                        this.v0 = this.v0 + 1;
+                    },
+                    increment1: function () {
+                        this.v1 = this.v1 + 1;
+                    },
+                    increment2: function () {
+                        this.v2 = this.v2 + 1;
+                    }
+                }        
+            })
+        </script>
     </body>
 </html>
