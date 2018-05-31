@@ -52,16 +52,19 @@
         <div id="app">
             <div id="counter">{{ message }}</div>
             <button v-on:click="increment">+1</button>
+            <div>Status: <span>{{ status }}</span></div>
         </div>
         <script>
             var app = new Vue({
                 el: '#app',
                 data: {
-                    message: 0
+                    message: 0,
+                    status: 'WIP'
                 },
                 methods: {
                     increment: function () {
                         this.message = this.message + 1;
+                        this.status = this.message < 5 ? 'WIP' : 'DONE';
                     }
                 }        
             })
