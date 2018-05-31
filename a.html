@@ -59,12 +59,12 @@
                 el: '#app',
                 data: {
                     message: 0,
-                    status: 'WIP'
+                    status: 'A'
                 },
                 methods: {
                     increment: function () {
                         this.message = this.message + 1;
-                        this.status = this.message < 5 ? 'WIP' : 'DONE';
+                        this.status = this.message < 5 ? 'A' : 'B';
                     }
                 }        
             })
