@@ -11,7 +11,7 @@
             <span>status:</span>
             <span>{{message}}</span>
         </div>
-        <!-- <button v-on:click="increment">+1</button>
+        <button v-on:click="auth">auth</button>
         <div>Status:
             <span>{{ status }}</span>
         </div> -->
@@ -23,6 +23,9 @@
                 message: 'no status yet'
             },
             methods: {
+                auth: function() {
+                    window.location.replace('https://github.com/login/oauth/authorize?client_id=19e701f54e59fd03a6ce&redirect_uri=https://imaman.github.io/pr2/auth.html');
+                }
             }
         });
 
