@@ -1,0 +1,63 @@
+<html>
+    <head>
+        <style>
+            button,.target {
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+            
+            div {
+                border-width: 5px;
+                border-style: solid                
+            }
+            .a {
+                border-color: red
+            }
+            .b {
+                background-color: green
+            }
+            .c {
+                background-color: blue
+            }
+            .x {
+                background-color: violet
+            }
+            .targetHidden {
+                display: none
+            }
+        </style>
+        <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+        <div id="app">
+            <div class="a">
+                <button class="c" v-on:click="change">Button A</button>
+                <span id="ttt" class="b target" v-bind:style="{targetHidden: isHidden}">TARGET OF A</span>
+            </div>
+        </div>
+        <script>
+            var app = new Vue({
+                el: '#app',
+                data: {
+                    isHidden: false
+                },
+                methods: {
+                    change: function () {
+                        this.isHidden = !this.isHidden;
+                        const e = document.getElementById('ttt');
+                        e.classList.toggle('targetHidden');
+                        console.log('isHidden=', this.isHidden, 'class=', document.getElementById("ttt").getAttribute('class'));
+                    },
+                }        
+            })
+        </script>
+    </body>
+</html>
