@@ -1,0 +1,19 @@
+h1 {
+    color: navy;
+    margin-left: 20px;
+}
+
+div, h1 {
+    margin: 0;
+    border-style: dotted;
+    border-width: 1px;
+    border-color: burlywood;
+}
+
+#main {
+    width: 800px;
+    background-color: lightblue;
+    margin: 0 auto;
+}
+
+
