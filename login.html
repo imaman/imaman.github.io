@@ -26,6 +26,22 @@
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
+
+        AWS.config.credentials = new AWS.WebIdentityCredentials({
+            RoleArn: 'arn:aws:iam::196625562809:role/Cognito_main_poolAuth_Role',
+            WebIdentityToken: id_token // Access token from identity provider
+        });
+
+        const s3 = new AWS.S3();
+
+        var params = {
+            Bucket: "noga2235deleteme", 
+            Key: "a.txt"
+        };
+        s3.getObject(params, (err, data) => {
+            if (err) return console.log('Failed to get. ', err.message, err.stack);
+            console.log('data=', JSON.stringify(data, null, 2));
+        });
     };
     </script>
 </body>
