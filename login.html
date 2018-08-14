@@ -4,12 +4,18 @@
     <meta name="google-signin-client_id" content="372171662989-20g77o6nr3fhmuhbml2gl7i98p580p5p.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>  
 </head>
 <body>
     <h1>Welcome, login?</h1>
     <div>
         <span>login button</span>
         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+        <div>
+            <pre id="text_display"></pre>
+        </div>
     </div>
     <hr>
     <script>
@@ -49,7 +55,8 @@
             };
             s3.getObject(params, (err, data) => {
                 if (err) return console.log('Failed to get. ', err.message, err.stack);
-                console.log('data=', JSON.stringify(data, null, 2));
+                const text = new TextDecoder("utf8").decode(data.Body);
+                $('#text_display').text(text);
             });
         });
 
