@@ -85,7 +85,7 @@
                 Payload: '{ "what": "hello_there" }'
             };
             lambda.invoke(params, (err, data) => {
-                const text = err ? err.message : JSON.stringify(data.Payload.body, null, 2);
+                const text = err ? err.message : JSON.stringify(JSON.parse(JSON.parse(data.Payload).body), null, 2);
                 $('#text_display_c').text(text);
             });
         });
