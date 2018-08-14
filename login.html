@@ -14,9 +14,11 @@
         <span>login button</span>
         <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
         <div>
-            <pre id="text_display">(waiting...)</pre>
+            <pre id="text_display_a">(waiting...)</pre>
         </div>
-    </div>
+        <div>
+            <pre id="text_display_b">(waiting...)</pre>
+        </div>
     <hr>
     <script>
     function onSignIn(googleUser) {
@@ -49,26 +51,17 @@
         AWS.config.credentials.get(function() {
             // Access AWS resources here.
             const s3 = new AWS.S3();
-            var params = {
-                Bucket: "noga2235deleteme", 
-                Key: "a.txt"
-            };
-            s3.getObject(params, (err, data) => {
+            s3.getObject({Bucket: "noga2235deleteme", Key: "a.txt"}, (err, data) => {
                 if (err) return console.log('Failed to get. ', err.message, err.stack);
                 const text = new TextDecoder("utf8").decode(data.Body);
-                $('#text_display').text(text);
+                $('#text_display_a').text(text);
+            });
+            s3.getObject({Bucket: "noga2235deleteme", Key: "b.txt"}, (err, data) => {
+                if (err) return console.log('Failed to get. ', err.message, err.stack);
+                const text = new TextDecoder("utf8").decode(data.Body);
+                $('#text_display_b').text(text);
             });
         });
-
-        // =============================================
-        // AWS.config.credentials = new AWS.WebIdentityCredentials({
-            //     RoleArn: 'arn:aws:iam::196625562809:role/Cognito_main_poolAuth_Role',
-            //     WebIdentityToken: id_token // Access token from identity provider
-            // });
-        // AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        //     IdentityPoolId: 'eu-central-1:52843c56-0d9a-4b4b-b703-eace049717bf',
-        // });
-
     };
     </script>
 </body>
