@@ -30,6 +30,10 @@
             <h2>b.txt</h2>
             <pre id="text_display_b">(waiting...)</pre>
         </div>
+        <div>
+            <h2>lambda</h2>
+            <pre id="text_display_c">(waiting...)</pre>
+        </div>
     </div>
     <script>
     function onSignIn(googleUser) {
@@ -77,6 +81,19 @@
                 else 
                     text = new TextDecoder("utf8").decode(data.Body);
                 $('#text_display_b').text(text);
+            });
+
+            const lambda = new AWS.Lambda();
+            var params = {
+                FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
+                InvocationType: "RequestResponse", 
+                Payload: {
+                    what: "hello_there"
+                }
+            };
+            lambda.invoke(params, (err, data) => {
+                const text = err ? err.message : JSON.stringify(data, null, 2);
+                $('#text_display_c').text(text);
             });
         });
     };
