@@ -52,13 +52,19 @@
             // Access AWS resources here.
             const s3 = new AWS.S3();
             s3.getObject({Bucket: "noga2235deleteme", Key: "a.txt"}, (err, data) => {
-                if (err) return console.log('Failed to get. ', err.message, err.stack);
-                const text = new TextDecoder("utf8").decode(data.Body);
+                let text = '';
+                if (err) 
+                    text = `Cannot get text: ${err.message}`;
+                else 
+                    text = new TextDecoder("utf8").decode(data.Body);
                 $('#text_display_a').text(text);
             });
             s3.getObject({Bucket: "noga2235deleteme", Key: "b.txt"}, (err, data) => {
-                if (err) return console.log('Failed to get. ', err.message, err.stack);
-                const text = new TextDecoder("utf8").decode(data.Body);
+                let text = '';
+                if (err) 
+                    text = `Cannot get text: ${err.message}`;
+                else 
+                    text = new TextDecoder("utf8").decode(data.Body);
                 $('#text_display_b').text(text);
             });
         });
