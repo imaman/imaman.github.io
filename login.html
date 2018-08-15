@@ -47,13 +47,13 @@
     }
 
     function onSignIn(googleUser) {
+        $('#text_display_a, #text_display_b, #text_display_c').text('Resetting..');
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
 
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
-        console.log("ID Token: " + id_token);
 
         // Based on: https://docs.aws.amazon.com/cognito/latest/developerguide/google.html
 
@@ -65,7 +65,7 @@
             }
         });
 
-        AWS.config.region = 'eu-central-1'; // Region
+        AWS.config.region = 'eu-central-1';
         
         // Obtain AWS credentials
         AWS.config.credentials.get(function() {
@@ -78,7 +78,7 @@
             var params = {
                 FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
                 InvocationType: "RequestResponse", 
-                Payload: `{ "what": "hello_there", "who": "${profile.getEmail()}" }`
+                Payload: `{ "what": "hello_there" }`
             };
             lambda.invoke(params, (err, data) => {
                 let text = '';
