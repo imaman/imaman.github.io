@@ -52,7 +52,6 @@
             IdentityId: id_token,
             Logins: {
                 'accounts.google.com': id_token,
-                'cognito-identity.amazonaws.com': profile.getEmail()
             }
         });
 
@@ -83,7 +82,7 @@
             var params = {
                 FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
                 InvocationType: "RequestResponse", 
-                Payload: '{ "what": "hello_there" }'
+                Payload: `{ "what": "hello_there", "who": ${profile.getEmail()} }`
             };
             lambda.invoke(params, (err, data) => {
                 const text = err ? err.message : JSON.stringify(JSON.parse(JSON.parse(data.Payload).body), null, 2);
