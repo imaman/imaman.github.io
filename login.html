@@ -81,7 +81,14 @@
                 Payload: `{ "what": "hello_there", "who": "${profile.getEmail()}" }`
             };
             lambda.invoke(params, (err, data) => {
-                const text = err ? err.message : JSON.stringify(JSON.parse(JSON.parse(data.Payload).body), null, 2);
+                let text = '';
+                if (err) {
+                    text = err.message;
+                } else if (data.FunctionError) {
+                    text = JSON.parse(data.Payload).errorMessage;
+                } else {
+                    text = JSON.stringify(JSON.parse(JSON.parse(data.Payload).body), null, 2);
+                }
                 $('#text_display_c').text(text);
             });
         });
