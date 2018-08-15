@@ -35,6 +35,17 @@
         </div>
     </div>
     <script>
+    function fetchBucketObjectInto(s3, bucket, key, element) {
+        s3.getObject({Bucket: bucket, Key: key}, (err, data) => {
+                let text = '';
+                if (err) 
+                    text = `Cannot get text: ${err.message}`;
+                else 
+                    text = new TextDecoder("utf8").decode(data.Body);
+                element.text(text);
+            });
+    }
+
     function onSignIn(googleUser) {
         // Useful data for your client-side scripts:
         var profile = googleUser.getBasicProfile();
@@ -60,28 +71,14 @@
         AWS.config.credentials.get(function() {
             // Access AWS resources here.
             const s3 = new AWS.S3();
-            s3.getObject({Bucket: "noga2235deleteme", Key: "a.txt"}, (err, data) => {
-                let text = '';
-                if (err) 
-                    text = `Cannot get text: ${err.message}`;
-                else 
-                    text = new TextDecoder("utf8").decode(data.Body);
-                $('#text_display_a').text(text);
-            });
-            s3.getObject({Bucket: "noga2235deleteme", Key: "b.txt"}, (err, data) => {
-                let text = '';
-                if (err) 
-                    text = `Cannot get text: ${err.message}`;
-                else 
-                    text = new TextDecoder("utf8").decode(data.Body);
-                $('#text_display_b').text(text);
-            });
+            fetchBucketObjectInto(s3, "noga2235deleteme", "a.txt", $('#text_display_a'));
+            fetchBucketObjectInto(s3, "noga2235deleteme", "b.txt", $('#text_display_b'));
 
             const lambda = new AWS.Lambda();
             var params = {
                 FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
                 InvocationType: "RequestResponse", 
-                Payload: `{ "what": "hello_there", "who": ${profile.getEmail()} }`
+                Payload: `{ "what": "hello_there", "who": "${profile.getEmail()}" }`
             };
             lambda.invoke(params, (err, data) => {
                 const text = err ? err.message : JSON.stringify(JSON.parse(JSON.parse(data.Payload).body), null, 2);
