@@ -50,7 +50,8 @@
         AWS.config.credentials = new AWS.CognitoIdentityCredentials({
             IdentityPoolId: 'eu-central-1:52843c56-0d9a-4b4b-b703-eace049717bf',
             Logins: {
-                'accounts.google.com': id_token
+                'accounts.google.com': id_token,
+                'imaman.github.io': profile.getEmail()
             }
         });
 
