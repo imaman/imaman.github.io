@@ -23,7 +23,7 @@
     <div class="wrapper">
         <div>
             <h2>lambda</h2>
-            <pre id="a">(waiting...)</pre>
+            <div id="a">(waiting...)</div>
         </div>
     </div>
     <script>
@@ -36,6 +36,10 @@
                     text = new TextDecoder("utf8").decode(data.Body);
                 element.text(text);
             });
+    }
+
+    function reportError(e) {
+        alert('Operation failed ' + e.stack);
     }
 
     function onSignIn(googleUser) {
@@ -80,8 +84,13 @@
                 Payload: JSON.stringify(request)
             };
             lambda.invoke(params, (err, data) => {
-                console.log('err=', JSON.stringify(err));
-                console.log('data=\n', JSON.stringify(data, null, 2));
+                if (err) {
+                    return reportError(err);
+                }
+                const resp = JSON.parse(data.Payload).body;
+                console.log('Got backend response=\n' + JSON.stringify(resp, null, 2));
+                const imageUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyImage}`;
+                $('#a').append(`<img src="${imageUrl}">`);
             });
         });
     };
