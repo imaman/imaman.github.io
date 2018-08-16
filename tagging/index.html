@@ -97,21 +97,20 @@
                 const resp = JSON.parse(data.Payload).body;
                 console.log('Got backend response=\n' + JSON.stringify(resp, null, 2));
                 const imageUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyImage}`;
-                $('#a').append(`<img src="${imageUrl}">`);
 
                 s3.getObject({Bucket: resp.bucket, Key: resp.keyDom}, (err, data) => {
                     if (err) {
                         return reportError(err);
                     }
                     const recordedDom = JSON.parse(new TextDecoder("utf8").decode(data.Body));
-                    startEditor(recordedDom);
+                    startEditor(recordedDom, imageUrl);
                 });
             });
         });
     }
 
-    function startEditor(recordedDom) {
-        
+    function startEditor(savedSanpshot, imageUrl) {
+        drawTagger('snapshot_1', 'status_bar_1', savedSanpshot, imageUrl); 
     }
     </script>
 </body>
