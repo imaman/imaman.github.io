@@ -1,5 +1,5 @@
 const drawTagger = (() => {
-    class Higligher {
+    class Higligther {
         constructor(ctx, matrix, statusBarElement, snapshot) {
             this.ctx = ctx;
             this.matrix = matrix;
@@ -152,7 +152,7 @@ const drawTagger = (() => {
                 matrix
             });
 
-            const higligher = new Higligher(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot);
+            const higlighter = new Higligther(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot);
 
             // cm.init();
 
@@ -164,12 +164,12 @@ const drawTagger = (() => {
                 // console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
                 // const pos = cm.getPos(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
-                higligher.draw(layoutTreeNode);
+                higlighter.draw(layoutTreeNode);
             };
 
 
             canvas2.mouseleave(() => {
-                higligher.draw(null);
+                higlighter.draw(null);
             });
 
             $(canvas2).appendTo(parent);
