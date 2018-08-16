@@ -1,9 +1,4 @@
 const drawTagger = (() => {
-    function drawElement(ctx, layoutTreeNode) {
-        const box = layoutTreeNode.boundingBox;
-        ctx.rect(box.x, box.y, box.width, box.height);
-    }
-
     class Higligher {
         constructor(ctx, matrix, statusBarElement, snapshot) {
             this.ctx = ctx;
@@ -164,8 +159,10 @@ const drawTagger = (() => {
             canvas2[0].onmousemove = e => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
-                const pos = cm.getPos(e);
+                const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.OffsetTop + parent.scrollTop };
+                console.log(`X,Y=${pos.x}, ${pos.y}`);
+                // console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
+                // const pos = cm.getPos(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higligher.draw(layoutTreeNode);
             };
