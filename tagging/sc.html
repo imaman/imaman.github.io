@@ -26,7 +26,7 @@
 <body>
     <div id="snapshot_container_1">
         <div id="snapshot_1" style="position: relative; left: 30px;">
-            <image src="download.png" width="1280" height="4096"> 
+            <!-- <image src="download.png" width="1280" height="4096">  -->
         </div>
         <div style="font-family: 'Courier New', Courier, monospace;"><span>Current: </span><span id="status_bar_1"></span></div>
     </div>
@@ -54,16 +54,16 @@
         const img = new Image();
         img.addEventListener('load', () => {
 
-            // const factor = 1.0;
-            // const canvasElementString = `<canvas width="${img.width * factor}" height="${img.height * factor}";"></canvas>`;
-            // console.log('Creating new canvas...');
-            // const canvas = $(canvasElementString).addClass('first').addClass('base-element');
-            // $(canvas).appendTo(parent);
-            // const ctx = canvas[0].getContext('2d');
+            const factor = 1.0;
+            const canvasElementString = `<canvas width="${img.width * factor}" height="${img.height * factor}";"></canvas>`;
+            console.log('Creating new canvas...');
+            const canvas = $(canvasElementString).addClass('first').addClass('base-element');
+            $(canvas).appendTo(parent);
+            const ctx = canvas[0].getContext('2d');
 
-            // ctx.scale(factor, factor);
-            // ctx.drawImage(img, 0, 0);        
-            // ctx.stroke();
+            ctx.scale(factor, factor);
+            ctx.drawImage(img, 0, 0);        
+            ctx.stroke();
 
 
             // const canvas2 = $(canvasElementString).addClass('second').addClass('fills-base-element');
