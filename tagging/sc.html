@@ -66,9 +66,9 @@
             ctx.stroke();
 
 
-            // const canvas2 = $(canvasElementString).addClass('second').addClass('fills-base-element');
-            // const ctx2 = canvas2[0].getContext('2d');
-            // ctx2.globalCompositeOperation = "copy"
+            const canvas2 = $(canvasElementString).addClass('second').addClass('fills-base-element');
+            const ctx2 = canvas2[0].getContext('2d');
+            ctx2.globalCompositeOperation = "copy"
 
             // const matrix = new Matrix(ctx);
             // // Create an instance of our position handler
@@ -96,7 +96,7 @@
             //     higligher.draw(null);
             // });
 
-            // $(canvas2).appendTo(parent);
+            $(canvas2).appendTo(parent);
         });
         img.src = imageUrl;
     }
