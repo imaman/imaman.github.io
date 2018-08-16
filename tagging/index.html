@@ -92,9 +92,12 @@
                 const imageUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyImage}`;
                 $('#a').append(`<img src="${imageUrl}">`);
 
-                const domJsonUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyDom}`;
-                $.get(domJsonUrl, data => {
-                    console.log('Got data. length=', JSON.stringify(data).length);
+                s3.getObject({Bucket: resp.bucket, Key: resp.keyDom}, (err, data) => {
+                    if (err) {
+                        return reportError(err);
+                    }
+                    const text = new TextDecoder("utf8").decode(data.Body);
+                    console.log('text.len=', text.length);
                 });
             });
         });
