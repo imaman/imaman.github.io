@@ -91,6 +91,11 @@
                 console.log('Got backend response=\n' + JSON.stringify(resp, null, 2));
                 const imageUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyImage}`;
                 $('#a').append(`<img src="${imageUrl}">`);
+
+                const domJsonUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyDom}`;
+                $.get(domJsonUrl, data => {
+                    console.log('Got data. length=', JSON.stringify(data).length);
+                });
             });
         });
     };
