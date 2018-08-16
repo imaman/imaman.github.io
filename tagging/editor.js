@@ -122,7 +122,7 @@ const drawTagger = (() => {
         return node.layoutTreeNode;
     }
 
-    function draw(parentId, statusBarId, savedSnapshot, imageUrl) {
+    function drawTagger(parentId, statusBarId, savedSnapshot, imageUrl) {
         const parent = document.getElementById(parentId);
         if (!parent) {
             throw new Error(`No element with ID ${parnentId} was found`);
@@ -179,5 +179,5 @@ const drawTagger = (() => {
         img.src = imageUrl;
     }
 
-    return draw;
+    return drawTagger;
 })();
