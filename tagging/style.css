@@ -1,0 +1,25 @@
+.base-element {
+    position: relative;
+    border-style: dashed;
+    border-width: 2px;
+}
+
+.fills-base-element {
+    position: absolute;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-style: dashed;
+    border-width: 2px;
+}
+
+.first {
+    border-color: red;
+}
+
+.second {
+    border-color: green;
+}
+
+

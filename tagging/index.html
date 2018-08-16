@@ -7,6 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>  
+    <script src="editor.js" async defer></script>
     <style>
         .wrapper {
             display: grid;
@@ -26,6 +27,12 @@
             <div id="a">(waiting...)</div>
         </div>
     </div>
+
+    <div id="snapshot_container_1">
+        <div id="snapshot_1" style="position: relative; left: 30px;"></div>
+        <div style="font-family: 'Courier New', Courier, monospace;"><span>Current: </span><span id="status_bar_1"></span></div>
+    </div>
+
     <script>
     function fetchBucketObjectInto(s3, bucket, key, element) {
         s3.getObject({Bucket: bucket, Key: key}, (err, data) => {
@@ -96,12 +103,16 @@
                     if (err) {
                         return reportError(err);
                     }
-                    const text = new TextDecoder("utf8").decode(data.Body);
-                    console.log('text.len=', text.length);
+                    const recordedDom = JSON.parse(new TextDecoder("utf8").decode(data.Body));
+                    startEditor(recordedDom);
                 });
             });
         });
-    };
+    }
+
+    function startEditor(recordedDom) {
+        
+    }
     </script>
 </body>
 </html>
