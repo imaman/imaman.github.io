@@ -1,4 +1,4 @@
-(() => {
+const drawTagger = (() => {
     function drawElement(ctx, layoutTreeNode) {
         const box = layoutTreeNode.boundingBox;
         ctx.rect(box.x, box.y, box.width, box.height);
@@ -122,74 +122,62 @@
         return node.layoutTreeNode;
     }
 
-    function draw(parentId, statusBarId) {
+    function draw(parentId, statusBarId, savedSnapshot, imageUrl) {
         const parent = document.getElementById(parentId);
         if (!parent) {
             throw new Error(`No element with ID ${parnentId} was found`);
         }
 
-        let savedSnapshot = null;
-        $.get('dom-snapshot.json', data => {
-            savedSnapshot = data;
+        const img = new Image();
+        img.addEventListener('load', () => {
 
-            const img = new Image();
-            img.addEventListener('load', () => {
+            const factor = 1.0;
+            const canvasElementString = `<canvas width="${img.width * factor}" height="${img.height * factor}"></canvas>`;
+            console.log('Creating new canvas...');
+            const canvas = $(canvasElementString).addClass('first').addClass('base-element');
+            $(canvas).appendTo(parent);
+            const ctx = canvas[0].getContext('2d');
 
-                const factor = 1.0;
-                const canvasElementString = `<canvas width="${img.width * factor}" height="${img.height * factor}"></canvas>`;
-                console.log('Creating new canvas...');
-                const canvas = $(canvasElementString).addClass('first').addClass('base-element');
-                $(canvas).appendTo(parent);
-                const ctx = canvas[0].getContext('2d');
-
-                ctx.scale(factor, factor);
-                ctx.drawImage(img, 0, 0);        
-                ctx.stroke();
+            ctx.scale(factor, factor);
+            ctx.drawImage(img, 0, 0);        
+            ctx.stroke();
 
 
-                const canvas2 = $(canvasElementString).addClass('second').addClass('fills-base-element');
-                const ctx2 = canvas2[0].getContext('2d');
-                ctx2.globalCompositeOperation = "copy"
+            const canvas2 = $(canvasElementString).addClass('second').addClass('fills-base-element');
+            const ctx2 = canvas2[0].getContext('2d');
+            ctx2.globalCompositeOperation = "copy"
 
-                const matrix = new Matrix(ctx);
-                // Create an instance of our position handler
-                const cm = new CanvasMouse(ctx2, {
-                    handleScroll: true,
-                    handleResize: true,
-                    handleScale: true,
-                    handleTransforms: true,
-                    matrix
-                });
-
-                const higligher = new Higligher(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot.snap);
-
-                // cm.init();
-
-                canvas2[0].onmousemove = e => {
-                    if (!savedSnapshot) {
-                        console.log('snaptshot data was not loaded yet');
-                        return;
-                    }
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const pos = cm.getPos(e);
-                    const layoutTreeNode = findLayoutTreeNode(savedSnapshot.snap, pos);
-                    higligher.draw(layoutTreeNode);
-                };
-
-
-                canvas2.mouseleave(() => {
-                    higligher.draw(null);
-                });
-
-                $(canvas2).appendTo(parent);
+            const matrix = new Matrix(ctx);
+            // Create an instance of our position handler
+            const cm = new CanvasMouse(ctx2, {
+                handleScroll: true,
+                handleResize: true,
+                handleScale: true,
+                handleTransforms: true,
+                matrix
             });
-            img.src = 'screenshot.png';
+
+            const higligher = new Higligher(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot.snap);
+
+            // cm.init();
+
+            canvas2[0].onmousemove = e => {
+                e.preventDefault();
+                e.stopPropagation();
+                const pos = cm.getPos(e);
+                const layoutTreeNode = findLayoutTreeNode(savedSnapshot.snap, pos);
+                higligher.draw(layoutTreeNode);
+            };
+
+
+            canvas2.mouseleave(() => {
+                higligher.draw(null);
+            });
+
+            $(canvas2).appendTo(parent);
         });
-    }    
+        img.src = imageUrl;
+    }
 
-    $(document).ready(() => {
-        draw('snapshot_1', 'status_bar_1');
-    });
-
+    return draw;
 })();
