@@ -157,7 +157,7 @@ const drawTagger = (() => {
                 matrix
             });
 
-            const higligher = new Higligher(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot.snap);
+            const higligher = new Higligher(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot);
 
             // cm.init();
 
@@ -165,7 +165,7 @@ const drawTagger = (() => {
                 e.preventDefault();
                 e.stopPropagation();
                 const pos = cm.getPos(e);
-                const layoutTreeNode = findLayoutTreeNode(savedSnapshot.snap, pos);
+                const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higligher.draw(layoutTreeNode);
             };
 
