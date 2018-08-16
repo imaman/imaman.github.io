@@ -164,6 +164,7 @@ const drawTagger = (() => {
             canvas2[0].onmousemove = e => {
                 e.preventDefault();
                 e.stopPropagation();
+                console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
                 const pos = cm.getPos(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higligher.draw(layoutTreeNode);
