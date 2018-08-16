@@ -1,0 +1,89 @@
+<html lang="en">
+<head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="372171662989-20g77o6nr3fhmuhbml2gl7i98p580p5p.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.283.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>  
+    <style>
+        .wrapper {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 10px;
+        }    
+    </style>
+</head>
+<body>
+    <h2 id="greet">Login, please</h2>
+    <div>
+        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    </div>
+    <div class="wrapper">
+        <div>
+            <h2>lambda</h2>
+            <pre id="a">(waiting...)</pre>
+        </div>
+    </div>
+    <script>
+    function fetchBucketObjectInto(s3, bucket, key, element) {
+        s3.getObject({Bucket: bucket, Key: key}, (err, data) => {
+                let text = '';
+                if (err) 
+                    text = `Cannot get text: ${err.message}`;
+                else 
+                    text = new TextDecoder("utf8").decode(data.Body);
+                element.text(text);
+            });
+    }
+
+    function onSignIn(googleUser) {
+        $('#text_display_a, #text_display_b, #text_display_c').text('Resetting..');
+        // Useful data for your client-side scripts:
+        var profile = googleUser.getBasicProfile();
+        $('#greet').text(`Welcome, ${profile.getEmail()}.`);
+
+        // The ID token you need to pass to your backend:
+        var id_token = googleUser.getAuthResponse().id_token;
+
+        // Based on: https://docs.aws.amazon.com/cognito/latest/developerguide/google.html
+
+        // Add the Google access token to the Cognito credentials login map.
+        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+            IdentityPoolId: 'eu-central-1:52843c56-0d9a-4b4b-b703-eace049717bf',
+            Logins: {
+                'accounts.google.com': id_token
+            }
+        });
+
+        AWS.config.region = 'eu-central-1';
+        
+        // Obtain AWS credentials
+        AWS.config.credentials.get(function() {
+            // Access AWS resources here.
+            const s3 = new AWS.S3();
+            const lambda = new AWS.Lambda();
+            // fetchBucketObjectInto(s3, "noga2235deleteme", "a.txt", $('#text_display_a'));
+            // fetchBucketObjectInto(s3, "noga2235deleteme", "b.txt", $('#text_display_b'));
+
+            const request = {
+                what: 'view_snapshot',
+                pageUrl: 'https://aws.amazon.com/ec2',
+                snapshotTimestamp: '2018-08-16T19:15:31.704Z'
+            };
+
+            var params = {
+                FunctionName: "testim-snapshotting-backend-dev-scary", 
+                InvocationType: "RequestResponse", 
+                Payload: JSON.stringify(request)
+            };
+            lambda.invoke(params, (err, data) => {
+                console.log('err=', JSON.stringify(err));
+                console.log('data=\n', JSON.stringify(data, null, 2));
+            });
+        });
+    };
+    </script>
+</body>
+</html>
