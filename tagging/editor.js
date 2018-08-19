@@ -111,6 +111,7 @@ const drawTagger = (() => {
             }
             this.isSelected = false;
             this.clear();
+            this.change(null);
             this.draw(layoutTreeNode);
             this.isSelected = true;
         }
