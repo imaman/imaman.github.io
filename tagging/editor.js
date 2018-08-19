@@ -78,6 +78,10 @@ const drawTagger = (() => {
         }
 
         draw(layoutTreeNode) {
+            if (this.isSelected) {
+                return;            
+            }
+
             if (layoutTreeNode === this.layoutTreeNode) {
                 return;
             }
