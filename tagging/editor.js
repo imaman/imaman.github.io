@@ -182,7 +182,7 @@ const drawTagger = (() => {
                 higlighter.draw(layoutTreeNode);
             });
 
-            canvas2[0].click(e => {
+            canvas2.click(e => {
                 e.preventDefault();
                 e.stopPropagation();
                 const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
