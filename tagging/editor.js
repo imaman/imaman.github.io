@@ -6,6 +6,7 @@ const drawTagger = (() => {
             this.layoutTreeNode = null;
             this.statusBarElement = statusBarElement;
             this.snapshot = snapshot;
+            this.isSelected = false;
         }
 
 
@@ -55,6 +56,10 @@ const drawTagger = (() => {
         }
 
         clear() {
+            if (this.isSelected) {
+                return;
+            }
+
             console.log('CLEARING');
             // this.ctx.save();
 
@@ -91,6 +96,19 @@ const drawTagger = (() => {
             this.ctx.fillRect(box.x, box.y, box.width, box.height);
             this.ctx.stroke();
 
+        }
+        
+        select(layoutTreeNode) {
+            if (this.isSelected) {
+                this.isSelected = false;
+                this.clear();
+                this.change(null);
+                return;
+            }
+            this.isSelected = false;
+            this.clear();
+            this.isSelected = true;
+            this.draw(layoutTreeNode);
         }
     }
 
@@ -160,24 +178,17 @@ const drawTagger = (() => {
                 e.preventDefault();
                 e.stopPropagation();
                 const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
-                console.log(`X,Y=${pos.x}, ${pos.y}`);
-                // console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
-                // const pos = cm.getPos(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higlighter.draw(layoutTreeNode);
             });
 
-            // canvas2[0].onclick = e => {
-            //     e.preventDefault();
-            //     e.stopPropagation();
-            //     const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
-            //     console.log(`X,Y=${pos.x}, ${pos.y}`);
-            //     higlighter.
-            //     // console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
-            //     // const pos = cm.getPos(e);
-            //     const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
-            //     higlighter.draw(layoutTreeNode);
-            // };
+            canvas2[0].click(e => {
+                e.preventDefault();
+                e.stopPropagation();
+                const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
+                const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
+                higlighter.select(layoutTreeNode);
+            });
 
 
             canvas2.mouseleave(() => {
