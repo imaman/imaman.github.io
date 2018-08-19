@@ -156,7 +156,7 @@ const drawTagger = (() => {
 
             // cm.init();
 
-            canvas2[0].onmousemove = e => {
+            canvas2.mousemove(e => {
                 e.preventDefault();
                 e.stopPropagation();
                 const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
@@ -165,7 +165,19 @@ const drawTagger = (() => {
                 // const pos = cm.getPos(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higlighter.draw(layoutTreeNode);
-            };
+            });
+
+            // canvas2[0].onclick = e => {
+            //     e.preventDefault();
+            //     e.stopPropagation();
+            //     const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
+            //     console.log(`X,Y=${pos.x}, ${pos.y}`);
+            //     higlighter.
+            //     // console.log(`Y=${e.clientY}, STOP=${parent.scrollTop}`);
+            //     // const pos = cm.getPos(e);
+            //     const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
+            //     higlighter.draw(layoutTreeNode);
+            // };
 
 
             canvas2.mouseleave(() => {
