@@ -107,8 +107,8 @@ const drawTagger = (() => {
             }
             this.isSelected = false;
             this.clear();
-            this.isSelected = true;
             this.draw(layoutTreeNode);
+            this.isSelected = true;
         }
     }
 
@@ -191,9 +191,9 @@ const drawTagger = (() => {
             });
 
 
-            canvas2.mouseleave(() => {
-                higlighter.draw(null);
-            });
+            // canvas2.mouseleave(() => {
+            //     higlighter.draw(null);
+            // });
 
             $(canvas2).appendTo(parent);
         });
