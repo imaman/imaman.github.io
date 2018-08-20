@@ -49,6 +49,14 @@
         <div id="snapshot_1" style="position: relative; left: 30px;"></div>
     </div>
 
+    <div id="snapshot_container_2">
+        <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
+            <span>Current: </span>
+            <span id="status_bar_2"></span>
+        </div>
+        <div id="snapshot_2" style="position: relative; left: 30px;"></div>
+    </div>
+
     <script>
     function fetchBucketObjectInto(s3, bucket, key, element) {
         s3.getObject({Bucket: bucket, Key: key}, (err, data) => {
@@ -127,6 +135,7 @@
 
     function startEditor(savedSanpshot, imageUrl) {
         drawTagger('snapshot_1', 'status_bar_1', savedSanpshot, imageUrl); 
+        drawTagger('snapshot_2', 'status_bar_2', savedSanpshot, imageUrl); 
     }
     </script>
 </body>
