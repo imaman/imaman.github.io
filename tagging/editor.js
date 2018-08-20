@@ -191,9 +191,10 @@ const drawTagger = (() => {
             // cm.init();
 
             function posFromEvent(e) {
+                const parentOffset = parent.offset();
                 return { 
-                    x: e.clientX - parent.offsetLeft + parent.scrollLeft + document.documentElement.scrollLeft, 
-                    y: e.clientY - parent.offsetTop + parent.scrollTop + document.documentElement.scrollTop 
+                    x: e.clientX - parentOffset.left + parent.scrollLeft() + document.documentElement.scrollLeft, 
+                    y: e.clientY - parentOffset.top + parent.scrollTop() + document.documentElement.scrollTop 
                 };
             }
 
