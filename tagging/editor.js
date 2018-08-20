@@ -214,10 +214,9 @@ const drawTagger = (() => {
                 higlighter.select(layoutTreeNode);
             });
 
-
-            // canvas2.mouseleave(() => {
-            //     higlighter.draw(null);
-            // });
+            canvas2.mouseleave(() => {
+                higlighter.draw(null);
+            });
 
             $(canvas2).appendTo(parent);
         });
