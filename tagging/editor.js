@@ -1,8 +1,7 @@
 const drawTagger = (() => {
     class Higligther {
-        constructor(ctx, matrix, statusBarElement, snapshot) {
+        constructor(ctx, statusBarElement, snapshot) {
             this.ctx = ctx;
-            this.matrix = matrix;
             this.layoutTreeNode = null;
             this.statusBarElement = statusBarElement;
             this.snapshot = snapshot;
@@ -29,7 +28,6 @@ const drawTagger = (() => {
             function show(layoutTreeNode) {
                 return !layoutTreeNode ? 'NONE' : layoutTreeNode.domNodeIndex;
             }
-            console.log(`Changing from ${show(this.layoutTreeNode)} -> ${show(layoutTreeNode)}`);
             
             if (!layoutTreeNode) {
                 this.layoutTreeNode = null;
@@ -66,7 +64,6 @@ const drawTagger = (() => {
                 return;
             }
 
-            console.log('CLEARING');
             // this.ctx.save();
 
             // Use the identity matrix while clearing the canvas
@@ -176,17 +173,17 @@ const drawTagger = (() => {
             const ctx2 = canvas2[0].getContext('2d');
             ctx2.globalCompositeOperation = "copy"
 
-            const matrix = new Matrix(ctx);
-            // Create an instance of our position handler
-            const cm = new CanvasMouse(ctx2, {
-                handleScroll: true,
-                handleResize: true,
-                handleScale: true,
-                handleTransforms: true,
-                matrix
-            });
+            // const matrix = new Matrix(ctx);
+            // // Create an instance of our position handler
+            // const cm = new CanvasMouse(ctx2, {
+            //     handleScroll: true,
+            //     handleResize: true,
+            //     handleScale: true,
+            //     handleTransforms: true,
+            //     matrix
+            // });
 
-            const higlighter = new Higligther(ctx2, matrix, statusBarElement, savedSnapshot);
+            const higlighter = new Higligther(ctx2, statusBarElement, savedSnapshot);
 
             // cm.init();
 
