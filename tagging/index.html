@@ -30,12 +30,12 @@
     <div id="snapshot_wrapper">
         <div id="snapshot_container_1">
             <div class="parenthood-chain-indicator"></div>
-            <div id="snapshot_1" class="snapshot-view"></div>
+            <div class="snapshot-view"></div>
         </div>
     
         <div id="snapshot_container_2">
             <div style="parenthood-chain-indicator"></div>
-            <div id="snapshot_2" class="snapshot-view"></div>
+            <div class="snapshot-view"></div>
         </div>
     </div>
 
@@ -116,8 +116,8 @@
     }
 
     function startEditor(savedSanpshot, imageUrl) {
-        drawTagger('snapshot_1', 'status_bar_1', savedSanpshot, imageUrl); 
-        drawTagger('snapshot_2', 'status_bar_2', savedSanpshot, imageUrl); 
+        drawTagger($('#snapshot_container_1'), savedSanpshot, imageUrl); 
+        drawTagger($('#snapshot_container_2'), savedSanpshot, imageUrl); 
     }
     </script>
 </body>

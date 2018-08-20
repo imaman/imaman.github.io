@@ -146,10 +146,15 @@ const drawTagger = (() => {
         return node.layoutTreeNode;
     }
 
-    function drawTagger(parentId, statusBarId, savedSnapshot, imageUrl) {
-        const parent = document.getElementById(parentId);
-        if (!parent) {
-            throw new Error(`No element with ID ${parnentId} was found`);
+    function drawTagger(container, savedSnapshot, imageUrl) {
+        const parent = container.find('.snapshot-view');
+        if (!parent.length) {
+            throw new Error(`No .snpshot-view element was found`);
+        }
+
+        const statusBarElement = container.find('.parenthood-chain-indicator');
+        if (statusBarElement.length) {
+            throw new Error('No .parenthood-chain-indicator element was found');
         }
 
         const img = new Image();
@@ -181,7 +186,7 @@ const drawTagger = (() => {
                 matrix
             });
 
-            const higlighter = new Higligther(ctx2, matrix, $(`#${statusBarId}`), savedSnapshot);
+            const higlighter = new Higligther(ctx2, matrix, statusBarElement, savedSnapshot);
 
             // cm.init();
 
