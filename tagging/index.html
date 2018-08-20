@@ -14,32 +14,6 @@
     <script src="matrix.min.js"></script>
     <script src="canvas-mouse.js"></script>
     <script src="editor.js" async defer></script>
-    <style>
-        .wrapper {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 10px;
-        }
-
-        #snapshot_1 {
-            overflow: auto;
-
-            max-width: 1320px;
-            max-height: 800px
-        }
-        #snapshot_2 {
-            overflow: auto;
-
-            max-width: 1320px;
-            max-height: 800px
-        }
-
-        #snapshot_wrapper {
-            display: grid;
-            grid-template-columns: 1048px 1048px;
-            grid-gap: 48px;
-        }
-    </style>
 </head>
 <body>
     <h2 id="greet">Login, please</h2>
@@ -55,19 +29,13 @@
 
     <div id="snapshot_wrapper">
         <div id="snapshot_container_1">
-            <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
-                <span>Current: </span>
-                <span id="status_bar_1"></span>
-            </div>
-            <div id="snapshot_1" style="position: relative; left: 30px;"></div>
+            <div class="parenthood-chain-indicator"></div>
+            <div id="snapshot_1" class="snapshot-view"></div>
         </div>
     
         <div id="snapshot_container_2">
-            <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
-                <span>Current: </span>
-                <span id="status_bar_2"></span>
-            </div>
-            <div id="snapshot_2" style="position: relative; left: 30px;"></div>
+            <div style="parenthood-chain-indicator"></div>
+            <div id="snapshot_2" class="snapshot-view"></div>
         </div>
     </div>
 

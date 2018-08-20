@@ -22,4 +22,46 @@
     border-color: green;
 }
 
+.parenthood-chain-indicator {
+    margin-bottom: 10px; 
+    /* height: 100px; */
+    display: grid;
+    grid-template-columns: repeat(12, 1fr)
+}
+
+.parenthood-chain-entry {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: violet;
+    margin: 4px;
+}
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+}
+
+#snapshot_1 {
+    overflow: auto;
+
+    max-width: 1320px;
+    max-height: 800px
+}
+#snapshot_2 {
+    overflow: auto;
+
+    max-width: 1320px;
+    max-height: 800px
+}
+
+#snapshot_wrapper {
+    display: grid;
+    grid-template-columns: 1048px 1048px;
+    grid-gap: 48px;
+}
+
+.snapshot-view {
+    position: relative;
+    left: 30px;
+}
 

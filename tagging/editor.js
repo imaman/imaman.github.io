@@ -31,27 +31,33 @@ const drawTagger = (() => {
             }
             console.log(`Changing from ${show(this.layoutTreeNode)} -> ${show(layoutTreeNode)}`);
             
-            let text = 'NONE';
-            if (layoutTreeNode) {
+            if (!layoutTreeNode) {
+                this.layoutTreeNode = null;
+                this.statusBarElement.html('<div>NONE</div>');
+                return;
+            }
 
-                const chain = findChain(this.snapshot.domNodes, layoutTreeNode.domNodeIndex)
-                    .filter(n => n.nodeName !== '#document' && n.nodeName !== 'HTML');
-
-                text = chain.map(n => {
+            const chain = findChain(this.snapshot.domNodes, layoutTreeNode.domNodeIndex)
+                .filter(n => n.nodeName !== '#document' && n.nodeName !== 'HTML')
+                .map(n => {
                     let attrs = '';
                     if (n.attributes) {
-                        attrs = ' ' + n.attributes.map(a => `${a.name}="${a.value}"`).join(' ');
+                        attrs = n.attributes.map(a => `${a.name}="${a.value}"`).join(' ');
                     }
 
                     let val = '';
                     if (n.nodeValue) {
                         val = ` : ${n.nodeValue}`;
                     }
-                    return `<${n.nodeName}${attrs}>${val}`;
-                }).join('; ');
-            }
-
-            this.statusBarElement.text(text);
+                    return {
+                        tag: n.nodeName,
+                        attributes: attrs,
+                        value: val
+                    };
+                })
+                .map(c => `<div>${c.tag}</div>`);
+            
+            this.statusBarElement.html(chain.join('\n'));
             this.layoutTreeNode = layoutTreeNode;
         }
 
