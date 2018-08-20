@@ -1,5 +1,5 @@
 function reportError(e) {
-    alert('Operation failed ' + e.stack);
+    alert('Operation failed ' + e);
 }
 
 function onSignIn(googleUser) {
