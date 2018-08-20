@@ -153,7 +153,7 @@ const drawTagger = (() => {
         }
 
         const statusBarElement = container.find('.parenthood-chain-indicator');
-        if (statusBarElement.length) {
+        if (!statusBarElement.length) {
             throw new Error('No .parenthood-chain-indicator element was found');
         }
 
