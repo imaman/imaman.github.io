@@ -27,6 +27,17 @@
             max-width: 1320px;
             max-height: 800px
         }
+        #snapshot_2 {
+            overflow: auto;
+
+            max-width: 1320px;
+            max-height: 800px
+        }
+
+        #snapshot_wrapper {
+            display: grid;
+            grid-template-columns: 1048px, 1048px;
+        }
     </style>
 </head>
 <body>
@@ -41,20 +52,22 @@
         </div>
     </div>
 
-    <div id="snapshot_container_1">
-        <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
-            <span>Current: </span>
-            <span id="status_bar_1"></span>
+    <div id="snapshot_wrapper">
+        <div id="snapshot_container_1">
+            <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
+                <span>Current: </span>
+                <span id="status_bar_1"></span>
+            </div>
+            <div id="snapshot_1" style="position: relative; left: 30px;"></div>
         </div>
-        <div id="snapshot_1" style="position: relative; left: 30px;"></div>
-    </div>
-
-    <div id="snapshot_container_2">
-        <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
-            <span>Current: </span>
-            <span id="status_bar_2"></span>
+    
+        <div id="snapshot_container_2">
+            <div style="font-family: 'Courier New', Courier, monospace; margin-bottom: 10px; height: 100px;">
+                <span>Current: </span>
+                <span id="status_bar_2"></span>
+            </div>
+            <div id="snapshot_2" style="position: relative; left: 30px;"></div>
         </div>
-        <div id="snapshot_2" style="position: relative; left: 30px;"></div>
     </div>
 
     <script>
