@@ -55,7 +55,7 @@ const drawTagger = (() => {
                         value: val
                     };
                 })
-                .map(c => `<div>${c.tag}</div>`);
+                .map(c => `<div class="parenthood-chain-entry">${c.tag}</div>`);
             
             this.statusBarElement.html(chain.join('\n'));
             this.layoutTreeNode = layoutTreeNode;
