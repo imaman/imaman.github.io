@@ -44,6 +44,13 @@ function onSignIn(googleUser) {
             if (err) {
                 return reportError(err);
             }
+
+            if (data.FunctionError) {
+                const errorMessage = JSON.parse(data.Payload).errorMessage
+                return reportError(errorMessage);
+            } 
+
+
             const resp = JSON.parse(data.Payload).body;
             console.log('Got backend response=\n' + JSON.stringify(resp, null, 2));
             const imageUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyImage}`;
