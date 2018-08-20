@@ -41,13 +41,7 @@
     grid-gap: 10px;
 }
 
-#snapshot_1 {
-    overflow: auto;
-
-    max-width: 1320px;
-    max-height: 800px
-}
-#snapshot_2 {
+.snapshot-view {
     overflow: auto;
 
     max-width: 1320px;
