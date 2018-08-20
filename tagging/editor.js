@@ -179,10 +179,17 @@ const drawTagger = (() => {
 
             // cm.init();
 
+            function posFromEvent(e) {
+                return { 
+                    x: e.clientX - parent.offsetLeft, 
+                    y: e.clientY - parent.offsetTop + parent.scrollTop + document.documentElement.scrollTop 
+                };
+            }
+
             canvas2.mousemove(e => {
                 e.preventDefault();
                 e.stopPropagation();
-                const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
+                const pos = posFromEvent(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higlighter.draw(layoutTreeNode);
             });
@@ -190,7 +197,7 @@ const drawTagger = (() => {
             canvas2.click(e => {
                 e.preventDefault();
                 e.stopPropagation();
-                const pos = { x: e.clientX - parent.offsetLeft, y: e.clientY - parent.offsetTop + parent.scrollTop };
+                const pos = posFromEvent(e);
                 const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
                 higlighter.select(layoutTreeNode);
             });
