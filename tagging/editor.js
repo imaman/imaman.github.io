@@ -25,36 +25,38 @@ const drawTagger = (() => {
                 }
             }
 
-            function show(layoutTreeNode) {
-                return !layoutTreeNode ? 'NONE' : layoutTreeNode.domNodeIndex;
-            }
+            const computeChainData = domNodeIndex => {
+                return findChain(this.snapshot.domNodes, domNodeIndex)
+                    .filter(n => n.nodeName !== '#document' && n.nodeName !== 'HTML')
+                    .map(n => {
+                        let attrs = '';
+                        if (n.attributes) {
+                            attrs = n.attributes.map(a => `${a.name}="${a.value}"`).join(' ');
+                        }
+
+                        let val = '';
+                        if (n.nodeValue) {
+                            val = ` : ${n.nodeValue}`;
+                        }
+                        return {
+                            tag: n.nodeName,
+                            attributes: attrs,
+                            value: val
+                        };
+                    })
+                    .map(c => `<div class="parenthood-chain-entry"><span class="vertical-center">&lt;${c.tag}&gt;</span></div>`);
+            };
             
+            let chain = null;
             if (!layoutTreeNode) {
-                this.layoutTreeNode = null;
-                this.statusBarElement.html('<div>NONE</div>');
-                return;
+                chain = [];
+            } else {
+                chain = computeChainData(layoutTreeNode.domNodeIndex);
             }
 
-            const chain = findChain(this.snapshot.domNodes, layoutTreeNode.domNodeIndex)
-                .filter(n => n.nodeName !== '#document' && n.nodeName !== 'HTML')
-                .map(n => {
-                    let attrs = '';
-                    if (n.attributes) {
-                        attrs = n.attributes.map(a => `${a.name}="${a.value}"`).join(' ');
-                    }
-
-                    let val = '';
-                    if (n.nodeValue) {
-                        val = ` : ${n.nodeValue}`;
-                    }
-                    return {
-                        tag: n.nodeName,
-                        attributes: attrs,
-                        value: val
-                    };
-                })
-                .map(c => `<div class="parenthood-chain-entry">&lt;${c.tag}&gt;</div>`);
-            
+            while(chain.length < 48) {
+                chain.push('<div class="parenthood-chain-entry empty">NONE</div>');
+            }
             this.statusBarElement.html(chain.join('\n'));
             this.layoutTreeNode = layoutTreeNode;
         }
@@ -184,6 +186,7 @@ const drawTagger = (() => {
             // });
 
             const higlighter = new Higligther(ctx2, statusBarElement, savedSnapshot);
+            higlighter.change(null);
 
             // cm.init();
 

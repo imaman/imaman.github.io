@@ -24,28 +24,26 @@
 
 .parenthood-chain-indicator {
     margin-bottom: 10px; 
-    /* height: 100px; */
     display: grid;
+    grid-gap: 10px;
     grid-template-columns: repeat(12, 1fr)
 }
 
 .parenthood-chain-entry {
     font-family: 'Courier New', Courier, monospace;
-    background-color: violet;
-    margin: 4px;
+    background-color: lightskyblue;
+    text-align: center;
+    height: 36px;
 }
 
-.wrapper {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
+.parenthood-chain-entry.empty {
+    visibility: hidden;
 }
 
-.snapshot-view {
-    overflow: auto;
-
-    max-width: 1320px;
-    max-height: 800px
+.vertical-center {
+    height: 36px;
+    line-height: 36px;
+    white-space: nowrap;
 }
 
 #snapshot_wrapper {
@@ -55,7 +53,10 @@
 }
 
 .snapshot-view {
+    overflow: auto;
+
+    max-width: 1320px;
+    max-height: 800px;
     position: relative;
     left: 30px;
 }
-
