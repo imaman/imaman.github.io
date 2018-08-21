@@ -3,10 +3,8 @@ function reportError(e) {
 }
 
 function onSignIn(googleUser) {
-    $('#text_display_a, #text_display_b, #text_display_c').text('Resetting..');
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
-    $('#greet').text(`Welcome, ${profile.getEmail()}.`);
 
     // The ID token you need to pass to your backend:
     var id_token = googleUser.getAuthResponse().id_token;
@@ -50,6 +48,7 @@ function onSignIn(googleUser) {
                 return reportError(errorMessage);
             } 
 
+            $('#greet').text(`Welcome, ${profile.getEmail()}.`);
 
             const resp = JSON.parse(data.Payload).body;
             console.log('Got backend response=\n' + JSON.stringify(resp, null, 2));

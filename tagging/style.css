@@ -46,11 +46,6 @@
     white-space: nowrap;
 }
 
-#snapshot_wrapper {
-    display: grid;
-    grid-template-columns: 1048px 1048px;
-    grid-gap: 48px;
-}
 
 .snapshot-view {
     overflow: auto;
@@ -59,4 +54,45 @@
     max-height: 800px;
     position: relative;
     left: 30px;
+}
+
+#snapshot_wrapper {
+    background-color: oldlace;
+    grid-area: main;
+    display: grid;
+    grid-template-columns: 1048px 1048px;
+    grid-gap: 48px;
+}
+
+
+#greet {
+    grid-area: end;
+}
+
+.sigin-widget {
+    grid-area: start;
+}
+
+#header {
+    background-color: lightgrey;
+    grid-area: header;
+    display: grid;
+    grid-template-areas: "start ... end";
+}
+
+#side {
+    background-color: lightcyan;
+    grid-area: side;
+}
+
+
+body {
+    margin: 0;
+    display: grid;
+    grid-template-columns: 200px 3000px;
+    grid-template-areas: 
+        "header header header"
+        "notes notes notes"
+        "side main main"
+        "side main main";
 }

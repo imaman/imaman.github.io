@@ -14,10 +14,10 @@
     <script src="editor.js" async defer></script>
 </head>
 <body>
-    <h2 id="greet">Login, please</h2>
-    <div>
-        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
-    </div>
+    <span id="header">
+        <span id="greet"></span>
+        <span class="g-signin2 sigin-widget" data-onsuccess="onSignIn" data-theme="dark"></span>
+    </span>
 
     <div id="snapshot_wrapper">
         <div id="snapshot_container_1">
@@ -29,6 +29,14 @@
             <div class="parenthood-chain-indicator"></div>
             <div class="snapshot-view"></div>
         </div>
+    </div>
+
+    <div id="side">
+        <ul>
+            <li>A</li>
+            <li>B</li>
+            <li>C</li>
+        </ul>
     </div>
 
     <script src="bootstrap.js"></script>
