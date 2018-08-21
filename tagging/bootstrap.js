@@ -1,5 +1,5 @@
 function reportError(e) {
-    alert('Operation failed ' + e);
+    $('#note').text('Operation failed ' + e + '[click to close]').toggleClass('everything-ok');
 }
 
 function onSignIn(googleUser) {
@@ -71,6 +71,10 @@ function startEditor(savedSanpshot, imageUrl) {
 }
 
 $(document).ready(async () => {
+    $('#note').click(function() {
+        $(this).toggleClass('everything-ok');
+    });
+
     if (location.host === "imaman.github.io") {
         return;
     }
