@@ -1,5 +1,6 @@
 function reportError(e) {
-    $('#note').text('Operation failed ' + e + '[click to close]').removeClass('everything-ok');
+    $('#note').find('.message').text('Operation failed ' + e + '[click to close]');
+    $('#note').removeClass('everything-ok');
 }
 
 function onSignIn(googleUser) {
@@ -71,8 +72,9 @@ function startEditor(savedSanpshot, imageUrl) {
 }
 
 $(document).ready(async () => {
-    $('#note').click(function() {
-        $(this).addClass('everything-ok');
+    const note = $('#note');
+    note.find('button').click(() => {
+        note.addClass('everything-ok');
     });
 
     if (location.host === "imaman.github.io") {
