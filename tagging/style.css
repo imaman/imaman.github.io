@@ -75,6 +75,18 @@
     visibility: hidden;
 }
 
+.dismiss-widget>svg {
+    vertical-align: middle;
+}
+.dismiss-widget {
+    border-width: 0;
+}
+
+.dismiss-widget.hover {
+    border-color: black;
+    border-style: solid;
+    border-width: 1px;
+}
 
 #header {
     background-color: #A9B7C0;

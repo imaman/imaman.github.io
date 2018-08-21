@@ -72,10 +72,13 @@ function startEditor(savedSanpshot, imageUrl) {
 }
 
 $(document).ready(async () => {
+    console.log('ABC I am here');
     const note = $('#note');
-    note.find('button').click(() => {
+    const widget = note.find('.dismiss-widget');
+    widget.click(() => {
         note.addClass('everything-ok');
     });
+    widget.hover(() => widget.addClass('hover'), () => widget.removeClass('hover'));
 
     if (location.host === "imaman.github.io") {
         return;
