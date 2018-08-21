@@ -1,5 +1,5 @@
 function reportError(e) {
-    $('#note').find('.message').text('Operation failed ' + e + '[click to close]');
+    $('#note').find('.message').text('Operation failed. ' + e);
     $('#note').removeClass('everything-ok');
 }
 
