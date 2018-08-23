@@ -65,7 +65,7 @@ function onSignIn(googleUser) {
         const pb = fetchSanpshot('https://aws.amazon.com/ec2', '2018-08-16T19:15:31.704Z');
 
         try {
-            const snapshots = await Promise.all(pa, pb);
+            const snapshots = await Promise.all([pa, pb]);
             startEditor(snapshots[0], snapshots[1]);
         } catch (e) {
             console.error('e=', e);
