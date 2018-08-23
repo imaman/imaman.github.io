@@ -66,7 +66,7 @@ function onSignIn(googleUser) {
 
         try {
             const snapshots = await Promise.all([pa, pb]);
-            startEditor(snapshots[0], snapshots[1]);
+            startEditor(snapshots);
         } catch (e) {
             console.error('e=', e);
             reportError(e);
