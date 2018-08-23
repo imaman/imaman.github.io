@@ -3,6 +3,41 @@ function reportError(e) {
     $('#note').removeClass('everything-ok');
 }
 
+function fetchSanpshot(pageUrl, snapshotTimestamp) {
+    const s3 = new AWS.S3();
+    const lambda = new AWS.Lambda();
+    
+    const request = {
+        format: 'INVOKE',
+        what: 'VIEW_SNAPSHOT',
+        pageUrl,
+        snapshotTimestamp
+    };
+
+    var params = {
+        FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
+        InvocationType: "RequestResponse", 
+        Payload: JSON.stringify(request)
+    };
+
+    const lambdaWrappedResponse = await lambda.invoke(params).promise();
+
+    if (lambdaWrappedResponse.FunctionError) {
+        const errorMessage = JSON.parse(data.Payload).errorMessage;
+        throw new Error(errorMessage);
+    } 
+
+    
+    const lambdaResponse = JSON.parse(lambdaWrappedResponse.Payload).body;
+    console.log('Got backend response=\n' + JSON.stringify(lambdaResponse, null, 2));
+    const imageUrl = `https://${lambdaResponse.bucket}.s3.amazonaws.com/${lambdaResponse.keyImage}`;
+    
+    const s3Resp = await s3.getObject({Bucket: lambdaResponse.bucket, Key: lambdaResponse.keyDom}).promise();
+    const body = JSON.parse(new TextDecoder("utf8").decode(s3Resp.Body));
+    const ret = new Snapshot(imageUrl, body);
+    return ret;
+}
+
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
@@ -25,54 +60,21 @@ function onSignIn(googleUser) {
     // Obtain AWS credentials
     AWS.config.credentials.get(function() {
         // Access AWS resources here.
-        const s3 = new AWS.S3();
-        const lambda = new AWS.Lambda();
-        const request = {
-            format: 'INVOKE',
-            what: 'VIEW_SNAPSHOT',
-            pageUrl: 'https://aws.amazon.com/ec2',
-            snapshotTimestamp: '2018-08-16T19:15:31.704Z'
-        };
+        $('#greet').text(`Welcome, ${profile.getEmail()}.`);
+        const pa = fetchSanpshot('https://aws.amazon.com/ec2', '2018-08-16T19:15:31.704Z');
+        const pb = fetchSanpshot('https://aws.amazon.com/ec2', '2018-08-16T19:15:31.704Z');
 
-        var params = {
-            FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
-            InvocationType: "RequestResponse", 
-            Payload: JSON.stringify(request)
-        };
-        lambda.invoke(params, (err, data) => {
-            if (err) {
-                return reportError(err);
-            }
-
-            if (data.FunctionError) {
-                const errorMessage = JSON.parse(data.Payload).errorMessage
-                return reportError(errorMessage);
-            } 
-
-            $('#greet').text(`Welcome, ${profile.getEmail()}.`);
-
-            const resp = JSON.parse(data.Payload).body;
-            console.log('Got backend response=\n' + JSON.stringify(resp, null, 2));
-            const imageUrl = `https://${resp.bucket}.s3.amazonaws.com/${resp.keyImage}`;
-
-            s3.getObject({Bucket: resp.bucket, Key: resp.keyDom}, (err, data) => {
-                if (err) {
-                    return reportError(err);
-                }
-                const recordedDom = JSON.parse(new TextDecoder("utf8").decode(data.Body));
-                startEditor(recordedDom, imageUrl);
-            });
-        });
+        const snapshots = await Promise.all(pa, pb);
+        startEditor(snapshots[0], snapshots[1]);
     });
 }
 
-function startEditor(savedDom, imageUrl) {
-    drawTagger($('#snapshot_container_1'), savedDom, imageUrl); 
-    drawTagger($('#snapshot_container_2'), savedDom, imageUrl); 
+function startEditor(snapshots) {
+    drawTagger($('#snapshot_container_1'), snapshots[0].savedDom, snapshots[0].imageUrl); 
+    drawTagger($('#snapshot_container_2'), snapshots[1].savedDom, snapshots[1].imageUrl); 
 }
 
 $(document).ready(async () => {
-    console.log('ABC I am here');
     const note = $('#note');
     const widget = note.find('.dismiss-widget');
     widget.click(() => {
@@ -86,5 +88,5 @@ $(document).ready(async () => {
 
     const savedDom = await $.get('local_only/dom.json');
     const imageUrl = 'local_only/download.png';
-    startEditor(savedDom, imageUrl);
+    startEditor(new Snapshot(savedDom, imageUrl));
 });
