@@ -23,7 +23,7 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     const lambdaWrappedResponse = await lambda.invoke(params).promise();
 
     if (lambdaWrappedResponse.FunctionError) {
-        const errorMessage = JSON.parse(data.Payload).errorMessage;
+        const errorMessage = JSON.parse(lambdaWrappedResponse.Payload).errorMessage;
         throw new Error(errorMessage);
     } 
 
