@@ -1,6 +1,6 @@
 class Snapshot {
-    constructor(imageUrl, savedDom) {
-        Object.defineProperty(this, "imageUrl", {value: imageUrl, enumerable: true});
+    constructor(savedDom, imageUrl) {
         Object.defineProperty(this, "savedDom", {value: savedDom, enumerable: true});
+        Object.defineProperty(this, "imageUrl", {value: imageUrl, enumerable: true});
     }
 }
