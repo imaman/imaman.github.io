@@ -61,8 +61,8 @@ function onSignIn(googleUser) {
     AWS.config.credentials.get(async () => {
         // Access AWS resources here.
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
-        const pa = fetchSanpshot('http://aws.amazon.com/s3', '2014-03-08T13:13:25.000Z');
-        const pb = fetchSanpshot('http://aws.amazon.com/s3', '2016-07-01T02:02:40.000Z');
+        const pb = fetchSanpshot('https://aws.amazon.com/ec2', '2010-03-15T18:43:37.000Z');
+        const pa = fetchSanpshot('https://aws.amazon.com/ec2', '2012-02-04T17:47:33.000Z');
 
         try {
             const snapshots = await Promise.all([pa, pb]);
