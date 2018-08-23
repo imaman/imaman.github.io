@@ -145,7 +145,7 @@ const drawTagger = (() => {
         return node.layoutTreeNode;
     }
 
-    function drawTagger(container, savedSnapshot, imageUrl) {
+    function drawTagger(container, savedDom, imageUrl) {
         const parent = container.find('.snapshot-view');
         if (!parent.length) {
             throw new Error(`No .snpshot-view element was found`);
@@ -185,7 +185,7 @@ const drawTagger = (() => {
             //     matrix
             // });
 
-            const higlighter = new Higligther(ctx2, statusBarElement, savedSnapshot);
+            const higlighter = new Higligther(ctx2, statusBarElement, savedDom);
             higlighter.change(null);
 
             // cm.init();
@@ -202,7 +202,7 @@ const drawTagger = (() => {
                 e.preventDefault();
                 e.stopPropagation();
                 const pos = posFromEvent(e);
-                const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
+                const layoutTreeNode = findLayoutTreeNode(savedDom, pos);
                 higlighter.draw(layoutTreeNode);
             });
 
@@ -210,7 +210,7 @@ const drawTagger = (() => {
                 e.preventDefault();
                 e.stopPropagation();
                 const pos = posFromEvent(e);
-                const layoutTreeNode = findLayoutTreeNode(savedSnapshot, pos);
+                const layoutTreeNode = findLayoutTreeNode(savedDom, pos);
                 higlighter.select(layoutTreeNode);
             });
 

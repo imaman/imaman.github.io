@@ -66,9 +66,9 @@ function onSignIn(googleUser) {
     });
 }
 
-function startEditor(savedSanpshot, imageUrl) {
-    drawTagger($('#snapshot_container_1'), savedSanpshot, imageUrl); 
-    drawTagger($('#snapshot_container_2'), savedSanpshot, imageUrl); 
+function startEditor(savedDom, imageUrl) {
+    drawTagger($('#snapshot_container_1'), savedDom, imageUrl); 
+    drawTagger($('#snapshot_container_2'), savedDom, imageUrl); 
 }
 
 $(document).ready(async () => {
@@ -84,7 +84,7 @@ $(document).ready(async () => {
         return;
     }
 
-    const savedSanpshot = await $.get('local_only/dom.json');
+    const savedDom = await $.get('local_only/dom.json');
     const imageUrl = 'local_only/download.png';
-    startEditor(savedSanpshot, imageUrl);
+    startEditor(savedDom, imageUrl);
 });
