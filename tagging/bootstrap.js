@@ -17,7 +17,7 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     };
 
     var params = {
-        FunctionName: "dataplatform-tagging-main", 
+        FunctionName: "dataplatform-tagging-dev-main", 
         InvocationType: "RequestResponse", 
         Payload: JSON.stringify(request)
     };
