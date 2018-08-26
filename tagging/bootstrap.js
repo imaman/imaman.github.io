@@ -32,7 +32,7 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     
     const lambdaResponse = JSON.parse(lambdaWrappedResponse.Payload).body;
     console.log('Got backend response=\n' + JSON.stringify(lambdaResponse, null, 2));
-    const imageUrl = `https://${lambdaResponse.bucket}.s3.amazonaws.com/${lambdaResponse.keyImage}`;
+    // const imageUrl = `https://${lambdaResponse.bucket}.s3.amazonaws.com/${lambdaResponse.keyImage}`;
 
     const s3PngResp = await s3.getObject({Bucket: lambdaResponse.bucket, Key: lambdaResponse.keyImage}).promise();
     const b64 = s3PngResp.Body.toString('base64');
