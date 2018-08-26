@@ -1,3 +1,5 @@
+const IDENTITY_POOL_ID = 'eu-central-1:52b31691-b94e-4f68-95d2-7f45e3d173bc';
+
 function reportError(e) {
     $('#note').find('.message').text('Operation failed. ' + e);
     $('#note').removeClass('everything-ok');
@@ -15,7 +17,7 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     };
 
     var params = {
-        FunctionName: "testim-snapshotting-backend-dev-testim-runner", 
+        FunctionName: "dataplatform-tagging-main", 
         InvocationType: "RequestResponse", 
         Payload: JSON.stringify(request)
     };
@@ -49,7 +51,7 @@ function onSignIn(googleUser) {
 
     // Add the Google access token to the Cognito credentials login map.
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-        IdentityPoolId: 'eu-central-1:52843c56-0d9a-4b4b-b703-eace049717bf',
+        IdentityPoolId: IDENTITY_POOL_ID,
         Logins: {
             'accounts.google.com': id_token
         }
