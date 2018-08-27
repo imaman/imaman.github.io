@@ -5,21 +5,14 @@ function reportError(e) {
     $('#note').removeClass('everything-ok');
 }
 
-async function fetchSanpshot(pageUrl, snapshotTimestamp) {
-    const s3 = new AWS.S3();
-    const lambda = new AWS.Lambda();
-    
-    const request = {
-        format: 'INVOKE',
-        what: 'VIEW_SNAPSHOT',
-        pageUrl,
-        snapshotTimestamp
-    };
 
+async function callLambda(request) {
+    const requestWithFormat = Object.assign({format: 'INVOKE'}, request);
+    const lambda = new AWS.Lambda();
     var params = {
         FunctionName: "dataplatform-tagging-dev-main", 
         InvocationType: "RequestResponse", 
-        Payload: JSON.stringify(request)
+        Payload: JSON.stringify(requestWithFormat)
     };
 
     const lambdaWrappedResponse = await lambda.invoke(params).promise();
@@ -30,10 +23,27 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     } 
 
     
-    const lambdaResponse = JSON.parse(lambdaWrappedResponse.Payload).body;
-    console.log('Got backend response=\n' + JSON.stringify(lambdaResponse, null, 2));
-    // const imageUrl = `https://${lambdaResponse.bucket}.s3.amazonaws.com/${lambdaResponse.keyImage}`;
+    const ret = JSON.parse(lambdaWrappedResponse.Payload).body;
+    return ret;
+}
 
+async function findArena() {
+    const findArenaResponse = await callLambda({
+        what: 'FIND_ARENA'
+    });
+    console.log('find arena response ', JSON.stringify(findArenaResponse));
+    return findArenaResponse;
+}
+
+async function fetchSanpshot(pageUrl, snapshotTimestamp) {    
+    const lambdaResponse = await callLambda({
+        what: 'VIEW_SNAPSHOT',
+        pageUrl,
+        snapshotTimestamp
+    });
+    console.log('Got backend response=\n' + JSON.stringify(lambdaResponse, null, 2));
+    
+    const s3 = new AWS.S3();
     const s3PngResp = await s3.getObject({Bucket: lambdaResponse.bucket, Key: lambdaResponse.keyImage}).promise();
     const b64 = s3PngResp.Body.toString('base64');
     const imageUrl = `data:image/png;base64,${b64}`;
@@ -68,8 +78,9 @@ function onSignIn(googleUser) {
     AWS.config.credentials.get(async () => {
         // Access AWS resources here.
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
-        const pb = fetchSanpshot('aws.amazon.com/ec2', '2010-03-15T18:43:37.000Z');
-        const pa = fetchSanpshot('aws.amazon.com/ec2', '2012-02-04T17:47:33.000Z');
+        const arena = await findArena();
+        const pb = fetchSanpshot(arena.pageUrl, arena.revisionFirst);
+        const pa = fetchSanpshot(arena.pageUrl, arena.revisionSecond);
 
         try {
             const snapshots = await Promise.all([pa, pb]);
