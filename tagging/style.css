@@ -56,6 +56,10 @@
     left: 0px;
 }
 
+.snapshot-metadata {
+    background-color: darkorchid    
+}
+
 
 #greet {
     grid-area: greet;

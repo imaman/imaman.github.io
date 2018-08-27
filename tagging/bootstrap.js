@@ -6,6 +6,7 @@ function reportError(e) {
 }
 
 
+
 async function callLambda(request) {
     const requestWithFormat = Object.assign({format: 'INVOKE'}, request);
     const lambda = new AWS.Lambda();
@@ -27,14 +28,6 @@ async function callLambda(request) {
     return ret;
 }
 
-async function findArena() {
-    const findArenaResponse = await callLambda({
-        what: 'FIND_ARENA'
-    });
-    console.log('find arena response ', JSON.stringify(findArenaResponse));
-    return findArenaResponse;
-}
-
 async function fetchSanpshot(pageUrl, snapshotTimestamp) {    
     const lambdaResponse = await callLambda({
         what: 'VIEW_SNAPSHOT',
@@ -51,9 +44,18 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     const s3DomResp = await s3.getObject({Bucket: lambdaResponse.bucket, Key: lambdaResponse.keyDom}).promise();
     const savedDom = JSON.parse(new TextDecoder("utf8").decode(s3DomResp.Body));
 
-    const ret = new Snapshot(savedDom, imageUrl);
+    const ret = new Snapshot(savedDom, imageUrl, lambdaResponse);
     return ret;
 }
+
+async function findArena() {
+    const findArenaResponse = await callLambda({
+        what: 'FIND_ARENA'
+    });
+    console.log('find arena response ', JSON.stringify(findArenaResponse));
+    return findArenaResponse;
+}
+
 
 function onSignIn(googleUser) {
     // Useful data for your client-side scripts:
@@ -93,8 +95,8 @@ function onSignIn(googleUser) {
 }
 
 function startEditor(snapshots) {
-    drawTagger($('#snapshot_container_1'), snapshots[0].savedDom, snapshots[0].imageUrl); 
-    drawTagger($('#snapshot_container_2'), snapshots[1].savedDom, snapshots[1].imageUrl); 
+    drawTagger($('#snapshot_container_1'), snapshots[0]); 
+    drawTagger($('#snapshot_container_2'), snapshots[1]); 
 }
 
 $(document).ready(async () => {
@@ -112,7 +114,7 @@ $(document).ready(async () => {
     try {
         const savedDom = await $.get('local_only/dom.json');
         const imageUrl = 'local_only/download.png';
-        const snapshot = new Snapshot(savedDom, imageUrl);
+        const snapshot = new Snapshot(savedDom, imageUrl, {a: 1, b: 2, c: 3});
         startEditor([snapshot, snapshot]);
     } catch(e) {
         console.error('e=', e);

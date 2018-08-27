@@ -145,7 +145,9 @@ const drawTagger = (() => {
         return node.layoutTreeNode;
     }
 
-    function drawTagger(container, savedDom, imageUrl) {
+    function drawTagger(container, snapshot) {
+        const { savedDom,  imageUrl } = snapshot;
+
         const parent = container.find('.snapshot-view');
         if (!parent.length) {
             throw new Error(`No .snpshot-view element was found`);
@@ -156,6 +158,7 @@ const drawTagger = (() => {
             throw new Error('No .parenthood-chain-indicator element was found');
         }
 
+        container.find('.snapshot-metadata').text(JSON.stringify(snapshot.metadata));
         const img = new Image();
         img.addEventListener('load', () => {
 
