@@ -158,7 +158,8 @@ const drawTagger = (() => {
             throw new Error('No .parenthood-chain-indicator element was found');
         }
 
-        container.find('.snapshot-metadata').text(JSON.stringify(snapshot.metadata));
+        container.find('.snapshot-metadata').html(
+            `<a href="${snapshot.metadata.snapshotUrl}">${snapshot.metadata.snapshotTimestamp}</a>`);
         const img = new Image();
         img.addEventListener('load', () => {
 
