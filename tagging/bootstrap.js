@@ -75,7 +75,7 @@ async function findArena() {
     if (!findArenaResponse.id) {
         throw new Error('Problem finding what to tag');
     }
-    
+
     location.replace(`?id=${findArenaResponse.id}`)
 }
 
@@ -143,7 +143,7 @@ function startEditor(snapshots, lambdaClient) {
         reportNone: reportNone
     }
     $('#page_header>.next').click(() => {
-        location.reload();
+        location.href = '?';
     });
 
     drawTagger($('#snapshot_container_1'), snapshots[0], services); 
