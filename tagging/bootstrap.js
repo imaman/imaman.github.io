@@ -58,11 +58,21 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
 }
 
 async function findArena() {
+    const queryParams = (new URL(document.location)).searchParams;
+    const arenaId = queryParams.get('id');
+    if (arenaId) {
+        const ret = await callLambda({
+            what: 'LOOKUP_ARENA_BY_ID',
+            id: arenaId
+        });
+        return ret;
+    }
+
     const findArenaResponse = await callLambda({
         what: 'FIND_ARENA'
     });
-    console.log('find arena response ', JSON.stringify(findArenaResponse));
-    return findArenaResponse;
+    console.log('Redirecting based on find arena response=\n', JSON.stringify(findArenaResponse));
+    location.replace(`?id=${findArenaResponse.id}`)
 }
 
 
