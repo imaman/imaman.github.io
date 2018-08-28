@@ -60,8 +60,6 @@
     background-color: #c7d8c6;
 }
 
-/* #cccbc6; */
-
 .snapshot-header>.button {
     background-color: #4CAF50;
     border: none;
@@ -134,6 +132,26 @@
 }
 
 
+#info {
+    grid-area: info;
+    background-color: #cccbc6;
+    min-height: 50px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+#snapshot_container_1 {
+    grid-area: one;
+}
+
+#snapshot_container_2 {
+    grid-area: two;
+}
+
+
 /* Pallete ref: https://www.canva.com/learn/website-color-schemes "32. Modern and Muted" */
 
 #snapshot_wrapper {
@@ -142,6 +160,9 @@
     display: grid;
     grid-template-columns: 1048px 1048px;
     grid-gap: 48px;
+    grid-template-areas:
+        "info info"
+        "one  two"
 }
 
 body {
@@ -150,6 +171,6 @@ body {
     grid-template-columns: 50px auto 20px;
     grid-template-areas: 
         "header header header"
-        "side main endside"
-        "side main endside";
+        "side   main   endside"
+        "side   main   endside";
 }
