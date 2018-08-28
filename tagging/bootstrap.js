@@ -78,8 +78,13 @@ async function findArena() {
         what: 'FIND_ARENA'
     });
     console.log('Redirecting based on find arena response=\n', JSON.stringify(findArenaResponse));
-    if (!findArenaResponse.id) {
+    if (!findArenaResponse) {
         throw new Error('Problem finding what to tag');
+    }
+
+    if (!findArenaResponse.id) {
+        // Nothing to tag.
+        return {};        
     }
 
     location.replace(`?id=${findArenaResponse.id}`)
@@ -122,7 +127,7 @@ function onSignIn(googleUser) {
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
         const arena = await findArena();
         const elem = $('#page_header>.page-metadata');
-        if (!arena.pageUrl || !arena.revisionFirst || !arena.revisionSecond) {
+        if (!arena.id) {
             elem.text('All snapshots were tagged! Your work here is done.');
             return;
         }
