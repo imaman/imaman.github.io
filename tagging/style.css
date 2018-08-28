@@ -88,11 +88,18 @@
 
 #note {
     grid-area: note;
-    background-color: lightcoral;
 }
 
 #note.everything-ok {
     visibility: hidden;
+}
+
+#note.error {
+    background-color: lightcoral;
+}
+
+#note.notification {
+    background-color: lightgoldenrodyellow;
 }
 
 .dismiss-widget>svg {

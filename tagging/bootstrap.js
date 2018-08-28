@@ -1,10 +1,19 @@
 const IDENTITY_POOL_ID = 'eu-central-1:52b31691-b94e-4f68-95d2-7f45e3d173bc';
 
-function reportError(e) {
-    $('#note').find('.message').text('Operation failed. ' + e);
-    $('#note').removeClass('everything-ok');
+
+function reportNone() {
+    $('#note').addClass('everything-ok').removeClass('notification').removeClass('error');
 }
 
+function reportError(e) {
+    $('#note').find('.message').text('Operation failed. ' + e);
+    $('#note').removeClass('everything-ok').addClass('error');
+}
+
+function reportMessage(text) {
+    $('#note').find('.message').text(text);
+    $('#note').removeClass('everything-ok').addClass('notification');
+}
 
 
 async function callLambda(request) {
@@ -106,15 +115,20 @@ function onSignIn(googleUser) {
 }
 
 function startEditor(snapshots, lambdaClient) {
-    drawTagger($('#snapshot_container_1'), snapshots[0], lambdaClient); 
-    drawTagger($('#snapshot_container_2'), snapshots[1], lambdaClient); 
+    const services = {
+        lambdaClient,
+        reportMessage: reportMessage,
+        reportError: reportError,
+        reportNone: reportNone
+    }
+    drawTagger($('#snapshot_container_1'), snapshots[0], services); 
+    drawTagger($('#snapshot_container_2'), snapshots[1], services); 
 }
 
 $(document).ready(async () => {
-    const note = $('#note');
-    const widget = note.find('.dismiss-widget');
+    const widget = $('#note').find('.dismiss-widget');
     widget.click(() => {
-        note.addClass('everything-ok');
+        reportNone();
     });
     widget.hover(() => widget.addClass('hover'), () => widget.removeClass('hover'));
 

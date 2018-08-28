@@ -145,7 +145,7 @@ const drawTagger = (() => {
         return node.layoutTreeNode;
     }
 
-    function drawTagger(container, snapshot, lambdaClient) {
+    function drawTagger(container, snapshot, services) {
         const { savedDom,  imageUrl } = snapshot;
 
         const parent = container.find('.snapshot-view');
@@ -162,8 +162,20 @@ const drawTagger = (() => {
         snapshotHeader.find('.snapshot-metadata').html(
             `<a href="${snapshot.metadata.snapshotUrl}">${snapshot.metadata.snapshotTimestamp}</a>`);
         snapshotHeader.find('.button').click(async function() {
-            const resp = await lambdaClient.reject(snapshot);
-            alert('resp=\n' + JSON.stringify(resp, null, 2));
+            const confirmed = confirm("Are you sure you want to reject the snapshot?");
+            if (confirmed) {
+                services.reportMessage('Rejecting...');
+                try {
+                    const resp = await services.lambdaClient.reject(snapshot);
+                    if (!resp.numRejectedArenas) {
+                        console.log('rejection response=', resp);
+                        throw new Error('Did not succeed to reject the snapshot');
+                    }
+                    services.reportNone();
+                } catch (e) {
+                    services.reportError(e);
+                }
+            }
         });
         const img = new Image();
         img.addEventListener('load', () => {
