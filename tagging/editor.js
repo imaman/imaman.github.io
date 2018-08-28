@@ -172,7 +172,7 @@ const drawTagger = (() => {
                         console.log('rejection response=', resp);
                         throw new Error('Did not succeed to reject the snapshot');
                     }
-                    services.reportNone();
+                    location.href = '?';
                 } catch (e) {
                     services.reportError(e);
                 }
