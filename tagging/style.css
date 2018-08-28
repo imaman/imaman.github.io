@@ -58,6 +58,8 @@
 
 .snapshot-header {
     background-color: #c7d8c6;
+    font-size: 28px;
+    text-align: center;
 }
 
 .snapshot-header>.button {
@@ -137,7 +139,7 @@
     background-color: #cccbc6;
     min-height: 50px;
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 32px;
     padding-top: 10px;
     padding-bottom: 10px;
     text-align: center;
