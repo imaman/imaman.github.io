@@ -179,7 +179,7 @@ const drawTagger = (() => {
             }
         });
         snapshotHeader.find('.recapture').click(async function() {
-            services.reportMessage('Rejecting...');
+            services.reportMessage('Recapturing (this can take a few minutes)...');
             await new Promise(resolve => setTimeout(resolve, 2000))
             try {
                 const resp = await services.lambdaClient.recapture(snapshot);
