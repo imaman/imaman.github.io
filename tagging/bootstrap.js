@@ -72,6 +72,10 @@ async function findArena() {
         what: 'FIND_ARENA'
     });
     console.log('Redirecting based on find arena response=\n', JSON.stringify(findArenaResponse));
+    if (!findArenaResponse.id) {
+        throw new Error('Problem finding what to tag');
+    }
+    
     location.replace(`?id=${findArenaResponse.id}`)
 }
 
