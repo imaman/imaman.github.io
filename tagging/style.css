@@ -62,7 +62,7 @@
     text-align: center;
 }
 
-.snapshot-header>.button {
+.button {
     background-color: #4CAF50;
     border: none;
     color: white;
@@ -134,8 +134,8 @@
 }
 
 
-#info {
-    grid-area: info;
+#page_header {
+    grid-area: page-header;
     background-color: #cccbc6;
     min-height: 50px;
     font-family: Arial, Helvetica, sans-serif;
@@ -163,8 +163,8 @@
     grid-template-columns: 1048px 1048px;
     grid-gap: 48px;
     grid-template-areas:
-        "info info"
-        "one  two"
+        "page-header page-header"
+        "one         two"
 }
 
 body {

@@ -101,12 +101,13 @@ function onSignIn(googleUser) {
         // Access AWS resources here.
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
         const arena = await findArena();
+        const elem = $('#page_header>.page-metadata');
         if (!arena.pageUrl || !arena.revisionFirst || !arena.revisionSecond) {
-            $('#info').text('All snapshots were tagged! Your work here is done.');
+            elem.text('All snapshots were tagged! Your work here is done.');
             return;
         }
 
-        $('#info').html(`PAGE: <a href="//${arena.pageUrl}">${arena.pageUrl}</a>`)
+        elem.html(`PAGE: <a href="//${arena.pageUrl}">${arena.pageUrl}</a>`)
         const pa = fetchSanpshot(arena.pageUrl, arena.revisionFirst);
         const pb = fetchSanpshot(arena.pageUrl, arena.revisionSecond);
 
@@ -127,6 +128,10 @@ function startEditor(snapshots, lambdaClient) {
         reportError: reportError,
         reportNone: reportNone
     }
+    $('#page_header>.next').click(() => {
+        location.reload();
+    });
+
     drawTagger($('#snapshot_container_1'), snapshots[0], services); 
     drawTagger($('#snapshot_container_2'), snapshots[1], services); 
 }
