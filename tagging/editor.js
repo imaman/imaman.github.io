@@ -161,7 +161,7 @@ const drawTagger = (() => {
         const snapshotHeader = container.find('.snapshot-header');
         snapshotHeader.find('.snapshot-metadata').html(
             `<a href="${snapshot.metadata.snapshotUrl}">${snapshot.metadata.snapshotTimestamp}</a>`);
-        snapshotHeader.find('.button').click(function() {
+        snapshotHeader.find('.button').click(async function() {
             const resp = await lambdaClient.reject(snapshot);
             alert('resp=\n' + JSON.stringify(resp, null, 2));
         });

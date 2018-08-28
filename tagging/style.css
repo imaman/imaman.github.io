@@ -57,11 +57,13 @@
 }
 
 .snapshot-header {
-    background-color: beige
+    background-color: #c7d8c6;
 }
 
+/* #cccbc6; */
+
 .snapshot-header>.button {
-    background-color: #4CAF50; /* Green */
+    background-color: #4CAF50;
     border: none;
     color: white;
     padding: 20px;
