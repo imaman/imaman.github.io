@@ -65,6 +65,12 @@ async function findArena() {
             what: 'LOOKUP_ARENA_BY_ID',
             id: arenaId
         });
+
+        if (!ret.id === arenaId) {
+            location.href = '?';
+            return;
+        }
+
         return ret;
     }
 
