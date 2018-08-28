@@ -58,6 +58,17 @@ async function findArena() {
 
 
 function onSignIn(googleUser) {
+
+    class LambdaClient {
+        async reject(snapshot) {
+            const request = { 
+                what: 'REJECT_REVISION',
+                pageUrl: snapshot.metadata.pageUrl,
+                snapshotTimestamp: snapshot.metadata.snapshotTimestamp
+            };
+            return callLambda(request);
+        }
+    }
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
 
@@ -86,7 +97,7 @@ function onSignIn(googleUser) {
 
         try {
             const snapshots = await Promise.all([pa, pb]);
-            startEditor(snapshots);
+            startEditor(snapshots, new LambdaClient());
         } catch (e) {
             console.error('e=', e);
             reportError(e);
@@ -94,9 +105,9 @@ function onSignIn(googleUser) {
     });
 }
 
-function startEditor(snapshots) {
-    drawTagger($('#snapshot_container_1'), snapshots[0]); 
-    drawTagger($('#snapshot_container_2'), snapshots[1]); 
+function startEditor(snapshots, lambdaClient) {
+    drawTagger($('#snapshot_container_1'), snapshots[0], lambdaClient); 
+    drawTagger($('#snapshot_container_2'), snapshots[1], lambdaClient); 
 }
 
 $(document).ready(async () => {

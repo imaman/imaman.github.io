@@ -145,7 +145,7 @@ const drawTagger = (() => {
         return node.layoutTreeNode;
     }
 
-    function drawTagger(container, snapshot) {
+    function drawTagger(container, snapshot, lambdaClient) {
         const { savedDom,  imageUrl } = snapshot;
 
         const parent = container.find('.snapshot-view');
@@ -158,8 +158,13 @@ const drawTagger = (() => {
             throw new Error('No .parenthood-chain-indicator element was found');
         }
 
-        container.find('.snapshot-metadata').html(
+        const snapshotHeader = container.find('.snapshot-header');
+        snapshotHeader.find('.snapshot-metadata').html(
             `<a href="${snapshot.metadata.snapshotUrl}">${snapshot.metadata.snapshotTimestamp}</a>`);
+        snapshotHeader.find('.button').click(function() {
+            const resp = await lambdaClient.reject(snapshot);
+            alert('resp=\n' + JSON.stringify(resp, null, 2));
+        });
         const img = new Image();
         img.addEventListener('load', () => {
 
