@@ -107,8 +107,8 @@ function onSignIn(googleUser) {
         }
 
         $('#info').html(`PAGE: <a href="//${arena.pageUrl}">${arena.pageUrl}</a>`)
-        const pb = fetchSanpshot(arena.pageUrl, arena.revisionFirst);
-        const pa = fetchSanpshot(arena.pageUrl, arena.revisionSecond);
+        const pa = fetchSanpshot(arena.pageUrl, arena.revisionFirst);
+        const pb = fetchSanpshot(arena.pageUrl, arena.revisionSecond);
 
         try {
             const snapshots = await Promise.all([pa, pb]);
