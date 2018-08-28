@@ -161,7 +161,7 @@ const drawTagger = (() => {
         const snapshotHeader = container.find('.snapshot-header');
         snapshotHeader.find('.snapshot-metadata').html(
             `<a href="${snapshot.metadata.snapshotUrl}">${snapshot.metadata.snapshotTimestamp}</a>`);
-        snapshotHeader.find('.button').click(async function() {
+        snapshotHeader.find('.reject').click(async function() {
             const confirmed = confirm("Are you sure you want to reject the snapshot?");
             if (confirmed) {
                 services.reportMessage('Rejecting...');
@@ -176,6 +176,17 @@ const drawTagger = (() => {
                 } catch (e) {
                     services.reportError(e);
                 }
+            }
+        });
+        snapshotHeader.find('.recapture').click(async function() {
+            services.reportMessage('Rejecting...');
+            await new Promise(resolve => setTimeout(resolve, 2000))
+            try {
+                const resp = await services.lambdaClient.recapture(snapshot);
+                console.log('recapture response=\n' + JSON.stringify(resp));
+                location.reload();
+            } catch (e) {
+                services.reportError(e);
             }
         });
         const img = new Image();

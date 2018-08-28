@@ -102,6 +102,17 @@ function onSignIn(googleUser) {
             };
             return callLambda(request);
         }
+
+        async recapture(snapshot) {
+            const request = { 
+                what: 'RECAPTURE_SNAPSHOT',
+                pageUrl: snapshot.metadata.pageUrl,
+                snapshotTimestamp: snapshot.metadata.snapshotTimestamp,
+                keyImage: snapshot.metadata.keyImage,
+                keyDom: snapshot.metadata.keyDom,
+            };
+            return callLambda(request);
+        }
     }
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
