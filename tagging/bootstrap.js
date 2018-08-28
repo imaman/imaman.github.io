@@ -101,6 +101,10 @@ function onSignIn(googleUser) {
         // Access AWS resources here.
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
         const arena = await findArena();
+        if (!arena.pageUrl || !arena.revisionFirst || !arena.revisionSecond) {
+            reportMessage('All snapshots were tagged! Your work here is done.');
+            return;
+        }
         const pb = fetchSanpshot(arena.pageUrl, arena.revisionFirst);
         const pa = fetchSanpshot(arena.pageUrl, arena.revisionSecond);
 
