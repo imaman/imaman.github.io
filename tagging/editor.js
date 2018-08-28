@@ -167,6 +167,7 @@ const drawTagger = (() => {
                 services.reportMessage('Rejecting...');
                 try {
                     const resp = await services.lambdaClient.reject(snapshot);
+                    console.log('reject response=\n' + JSON.stringify(reject));
                     if (!resp.numRejectedArenas) {
                         console.log('rejection response=', resp);
                         throw new Error('Did not succeed to reject the snapshot');
