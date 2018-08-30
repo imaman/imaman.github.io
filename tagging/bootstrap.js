@@ -91,9 +91,10 @@ async function findArena(lambdaClient) {
 }
 
 class LambdaClient {
-    async findArena() {
+    async findArena(arenaPhase = 'TODO') {
         return await callLambda({
-            what: 'FIND_ARENA'
+            what: 'FIND_ARENA',
+            arenaPhase
         });
     }
 
@@ -189,8 +190,12 @@ function startEditor(snapshots, lambdaClient) {
     });
 
     $('#page_header>.next-unconfirmed').click(() => {
-        lambdaClient.
-        location.href = '?';
+        const resp = await lambdaClient.findArena('UNCONFIRMED');
+        if (!resp.id) {
+            services.reportMessage('No unconfirmed arenas were found');
+            return;
+        }
+        location.href = `?id=${resp.id}`;
     });
 
     drawTagger($('#snapshot_container_1'), snapshots[0], services); 
