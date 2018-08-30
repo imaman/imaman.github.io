@@ -1,3 +1,5 @@
+const io_testim_dataplatform_fronend = (function() {
+
 const IDENTITY_POOL_ID = 'eu-central-1:52b31691-b94e-4f68-95d2-7f45e3d173bc';
 
 
@@ -57,14 +59,14 @@ async function fetchSanpshot(pageUrl, snapshotTimestamp) {
     return ret;
 }
 
-async function findArena() {
+/**
+ * @param {LambdaClient} lambdaClient 
+ */
+async function findArena(lambdaClient) {
     const queryParams = (new URL(document.location)).searchParams;
     const arenaId = queryParams.get('id');
     if (arenaId) {
-        const ret = await callLambda({
-            what: 'LOOKUP_ARENA_BY_ID',
-            id: arenaId
-        });
+        const ret = await lambdaClient.lookupArenaById(id);
 
         if (!ret.id === arenaId) {
             location.href = '?';
@@ -74,9 +76,7 @@ async function findArena() {
         return ret;
     }
 
-    const findArenaResponse = await callLambda({
-        what: 'FIND_ARENA'
-    });
+    const findArenaResponse = await lambdaClient.findArena();
     console.log('Redirecting based on find arena response=\n', JSON.stringify(findArenaResponse));
     if (!findArenaResponse) {
         throw new Error('Problem finding what to tag');
@@ -90,30 +90,43 @@ async function findArena() {
     location.replace(`?id=${findArenaResponse.id}`)
 }
 
+class LambdaClient {
+    async findArena() {
+        return await callLambda({
+            what: 'FIND_ARENA'
+        });
+    }
+
+    async lookupArenaById(id) {
+        return await callLambda({
+            what: 'LOOKUP_ARENA_BY_ID',
+            id: arenaId
+        });
+    }
+
+    async reject(snapshot) {
+        const request = { 
+            what: 'REJECT_REVISION',
+            pageUrl: snapshot.metadata.pageUrl,
+            snapshotTimestamp: snapshot.metadata.snapshotTimestamp
+        };
+        return callLambda(request);
+    }
+
+    async recapture(snapshot) {
+        const request = { 
+            what: 'RECAPTURE_SNAPSHOT',
+            pageUrl: snapshot.metadata.pageUrl,
+            snapshotTimestamp: snapshot.metadata.snapshotTimestamp,
+            keyImage: snapshot.metadata.keyImage,
+            keyDom: snapshot.metadata.keyDom,
+        };
+        return callLambda(request);
+    }
+}
 
 function onSignIn(googleUser) {
 
-    class LambdaClient {
-        async reject(snapshot) {
-            const request = { 
-                what: 'REJECT_REVISION',
-                pageUrl: snapshot.metadata.pageUrl,
-                snapshotTimestamp: snapshot.metadata.snapshotTimestamp
-            };
-            return callLambda(request);
-        }
-
-        async recapture(snapshot) {
-            const request = { 
-                what: 'RECAPTURE_SNAPSHOT',
-                pageUrl: snapshot.metadata.pageUrl,
-                snapshotTimestamp: snapshot.metadata.snapshotTimestamp,
-                keyImage: snapshot.metadata.keyImage,
-                keyDom: snapshot.metadata.keyDom,
-            };
-            return callLambda(request);
-        }
-    }
     // Useful data for your client-side scripts:
     var profile = googleUser.getBasicProfile();
 
@@ -135,8 +148,10 @@ function onSignIn(googleUser) {
     // Obtain AWS credentials
     AWS.config.credentials.get(async () => {
         // Access AWS resources here.
+        const lambdaClient = new LambdaClient();
+
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
-        const arena = await findArena();
+        const arena = await findArena(lambdaClient);
         const elem = $('#page_header>.page-metadata');
         if (!arena.id) {
             elem.text('All snapshots were tagged! Your work here is done.');
@@ -157,6 +172,11 @@ function onSignIn(googleUser) {
     });
 }
 
+/**
+ * 
+ * @param {Array<Snapshot>} snapshots 
+ * @param {LambdaClient} lambdaClient 
+ */
 function startEditor(snapshots, lambdaClient) {
     const services = {
         lambdaClient,
@@ -165,6 +185,11 @@ function startEditor(snapshots, lambdaClient) {
         reportNone: reportNone
     }
     $('#page_header>.next').click(() => {
+        location.href = '?';
+    });
+
+    $('#page_header>.next-unconfirmed').click(() => {
+        lambdaClient.
         location.href = '?';
     });
 
@@ -193,3 +218,9 @@ $(document).ready(async () => {
         reportError(e);
     }
 });
+
+return {
+    onSignIn,
+}
+
+})();
