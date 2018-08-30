@@ -66,7 +66,7 @@ async function findArena(lambdaClient) {
     const queryParams = (new URL(document.location)).searchParams;
     const arenaId = queryParams.get('id');
     if (arenaId) {
-        const ret = await lambdaClient.lookupArenaById(id);
+        const ret = await lambdaClient.lookupArenaById(arenaId);
 
         if (!ret.id === arenaId) {
             location.href = '?';
