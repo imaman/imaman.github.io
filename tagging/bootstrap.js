@@ -189,7 +189,7 @@ function startEditor(snapshots, lambdaClient) {
         location.href = '?';
     });
 
-    $('#page_header>.next-unconfirmed').click(() => {
+    $('#page_header>.next-unconfirmed').click(async () => {
         const resp = await lambdaClient.findArena('UNCONFIRMED');
         if (!resp.id) {
             services.reportMessage('No unconfirmed arenas were found');
