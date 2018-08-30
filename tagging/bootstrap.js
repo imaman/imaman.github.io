@@ -91,6 +91,13 @@ async function findArena(lambdaClient) {
 }
 
 class LambdaClient {
+    async approveArena(arenaId) {
+        return await callLambda({
+            what: 'APPROVE_ARENA',
+            id: arenaId
+        });
+    }
+    
     async findArena(arenaPhase = 'TODO') {
         return await callLambda({
             what: 'FIND_ARENA',
@@ -172,7 +179,7 @@ function onSignIn(googleUser) {
 
         try {
             const snapshots = await Promise.all([pa, pb]);
-            startEditor(snapshots, new LambdaClient());
+            startEditor(snapshots, new LambdaClient(), arena);
         } catch (e) {
             console.error('e=', e);
             reportError(e);
@@ -185,24 +192,34 @@ function onSignIn(googleUser) {
  * @param {Array<Snapshot>} snapshots 
  * @param {LambdaClient} lambdaClient 
  */
-function startEditor(snapshots, lambdaClient) {
+function startEditor(snapshots, lambdaClient, arena) {
     const services = {
         lambdaClient,
         reportMessage: reportMessage,
         reportError: reportError,
-        reportNone: reportNone
+        reportNone: reportNone,
+        arena,
     }
     $('#page_header>.next').click(() => {
         location.href = '?';
     });
 
     $('#page_header>.next-unconfirmed').click(async () => {
-        const resp = await lambdaClient.findArena('UNCONFIRMED');
+        const resp = await services.lambdaClient.findArena('UNCONFIRMED');
         if (!resp.id) {
             services.reportMessage('No unconfirmed arenas were found');
             return;
         }
         location.href = `?id=${resp.id}`;
+    });
+    $('#page_header>.confirm-arena').click(async () => {
+        try {
+            const resp = await services.lambdaClient.approveArena(arena.id);
+            console.log('confirmed response=', resp);
+            location.reload();
+        } catch (e) {
+            services.reportError(e);
+        }
     });
 
     drawTagger($('#snapshot_container_1'), snapshots[0], services); 
