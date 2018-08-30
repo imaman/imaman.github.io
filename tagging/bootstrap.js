@@ -97,7 +97,7 @@ class LambdaClient {
         });
     }
 
-    async lookupArenaById(id) {
+    async lookupArenaById(arenaId) {
         return await callLambda({
             what: 'LOOKUP_ARENA_BY_ID',
             id: arenaId
