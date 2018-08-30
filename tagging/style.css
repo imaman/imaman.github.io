@@ -134,7 +134,7 @@
 }
 
 .button.disabled {
-    visibility: none;
+    visibility: hidden;
 }
 
 
