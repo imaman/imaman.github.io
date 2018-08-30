@@ -168,9 +168,11 @@ function onSignIn(googleUser) {
         }
 
         if (arena.phase === 'UNCONFIRMED') {
-            pageHeader.addClass('phase-unconfirmed')
+            pageHeader.addClass('phase-unconfirmed');
+            pageHeader.find('.confirm-arena').removeClass('disabled');
         } else {
             pageHeader.removeClass('phase-unconfirmed')
+            pageHeader.find('.confirm-arena').addClass('disabled');
         }
 
         elem.html(`PAGE: <a href="//${arena.pageUrl}">${arena.pageUrl}</a>`)

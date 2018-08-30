@@ -133,6 +133,10 @@
     grid-area: endside;
 }
 
+.button.disabled {
+    visibility: none;
+}
+
 
 #page_header {
     grid-area: page-header;
