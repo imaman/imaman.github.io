@@ -224,3 +224,5 @@ return {
 }
 
 })();
+
+io_testim_dataplatform_fronend_onSignIn  = io_testim_dataplatform_fronend.onSignIn;
