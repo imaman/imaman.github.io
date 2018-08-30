@@ -145,6 +145,10 @@
     text-align: center;
 }
 
+#page_header.phase-unconfirmed {
+    background-color: lightsalmon;
+}
+
 #snapshot_container_1 {
     grid-area: one;
 }

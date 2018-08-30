@@ -153,10 +153,17 @@ function onSignIn(googleUser) {
 
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
         const arena = await findArena(lambdaClient);
-        const elem = $('#page_header>.page-metadata');
+        const pageHeader = $('#page_header');
+        const elem = pageHeader.find('.page-metadata');
         if (!arena.id) {
             elem.text('All snapshots were tagged! Your work here is done.');
             return;
+        }
+
+        if (arena.phase === 'UNCONFIRMED') {
+            pageHeader.addClass('phase-unconfirmed')
+        } else {
+            pageHeader.removeClass('phase-unconfirmed')
         }
 
         elem.html(`PAGE: <a href="//${arena.pageUrl}">${arena.pageUrl}</a>`)
