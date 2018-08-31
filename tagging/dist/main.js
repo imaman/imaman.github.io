@@ -4148,7 +4148,7 @@ eval("module.exports = function(module) {\n\tif (!module.webpackPolyfill) {\n\t\
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class Snapshot {\n    constructor(savedDom, imageUrl, metadata) {\n        Object.defineProperty(this, \"savedDom\", {value: savedDom, enumerable: true});\n        Object.defineProperty(this, \"imageUrl\", {value: imageUrl, enumerable: true});\n        Object.defineProperty(this, \"metadata\", {value: metadata, enumerable: true});\n    }\n}\n\n\n//# sourceURL=webpack:///./src/Snapshot.js?");
+eval("class Snapshot {\n    constructor(savedDom, imageUrl, metadata) {\n        Object.defineProperty(this, \"savedDom\", {value: savedDom, enumerable: true});\n        Object.defineProperty(this, \"imageUrl\", {value: imageUrl, enumerable: true});\n        Object.defineProperty(this, \"metadata\", {value: metadata, enumerable: true});\n    }\n}\n\nmodule.exports = Snapshot;\n\n\n//# sourceURL=webpack:///./src/Snapshot.js?");
 
 /***/ }),
 
