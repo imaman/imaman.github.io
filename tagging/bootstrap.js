@@ -76,7 +76,7 @@ async function findArena(lambdaClient) {
         return ret;
     }
 
-    const findArenaResponse = await lambdaClient.findArena();
+    const findArenaResponse = await lambdaClient.findArena('TODO');
     console.log('Redirecting based on find arena response=\n', JSON.stringify(findArenaResponse));
     if (!findArenaResponse) {
         throw new Error('Problem finding what to tag');
@@ -98,10 +98,11 @@ class LambdaClient {
         });
     }
     
-    async findArena(arenaPhase = 'TODO') {
+    async findArena(arenaPhase, exclusiveChronologicalKey) {
         return await callLambda({
             what: 'FIND_ARENA',
-            arenaPhase
+            arenaPhase,
+            exclusiveChronologicalKey
         });
     }
 
@@ -207,7 +208,8 @@ function startEditor(snapshots, lambdaClient, arena) {
     });
 
     $('#page_header>.next-unconfirmed').click(async () => {
-        const resp = await services.lambdaClient.findArena('UNCONFIRMED');
+        const exclusiveChronologicalKey = arena && arena.chronologicalKey;
+        const resp = await services.lambdaClient.findArena('UNCONFIRMED', exclusiveChronologicalKey);
         if (!resp.id) {
             services.reportMessage('No unconfirmed arenas were found');
             return;
