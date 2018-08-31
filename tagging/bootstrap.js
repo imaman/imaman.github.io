@@ -161,6 +161,16 @@ function onSignIn(googleUser) {
 
         $('#greet').text(`Welcome, ${profile.getEmail()}.`);
         const arena = await findArena(lambdaClient);
+
+        const services = {
+            lambdaClient: new LambdaClient(),
+            reportMessage: reportMessage,
+            reportError: reportError,
+            reportNone: reportNone,
+            arena,
+        }
+        setupPageWidgets(services);
+    
         const pageHeader = $('#page_header');
         const elem = pageHeader.find('.page-metadata');
         if (!arena.id) {
@@ -182,7 +192,7 @@ function onSignIn(googleUser) {
 
         try {
             const snapshots = await Promise.all([pa, pb]);
-            startEditor(snapshots, new LambdaClient(), arena);
+            startEditor(snapshots);
         } catch (e) {
             console.error('e=', e);
             reportError(e);
@@ -190,25 +200,14 @@ function onSignIn(googleUser) {
     });
 }
 
-/**
- * 
- * @param {Array<Snapshot>} snapshots 
- * @param {LambdaClient} lambdaClient 
- */
-function startEditor(snapshots, lambdaClient, arena) {
-    const services = {
-        lambdaClient,
-        reportMessage: reportMessage,
-        reportError: reportError,
-        reportNone: reportNone,
-        arena,
-    }
+
+function setupPageWidgets(services) {
     $('#page_header>.next').click(() => {
         location.href = '?';
     });
 
     $('#page_header>.next-unconfirmed').click(async () => {
-        const exclusiveChronologicalKey = arena && arena.chronologicalKey;
+        const exclusiveChronologicalKey = services.arena && services.arena.chronologicalKey;
         const resp = await services.lambdaClient.findArena('UNCONFIRMED', exclusiveChronologicalKey);
         if (!resp.id) {
             services.reportMessage('No unconfirmed arenas were found');
@@ -218,14 +217,20 @@ function startEditor(snapshots, lambdaClient, arena) {
     });
     $('#page_header>.confirm-arena').click(async () => {
         try {
-            const resp = await services.lambdaClient.approveArena(arena.id);
+            const resp = await services.lambdaClient.approveArena(services.arena.id);
             console.log('confirmed response=', resp);
             location.reload();
         } catch (e) {
             services.reportError(e);
         }
     });
+}
 
+/**
+ * 
+ * @param {Array<Snapshot>} snapshots 
+ */
+function startEditor(snapshots, services) {
     drawTagger($('#snapshot_container_1'), snapshots[0], services); 
     drawTagger($('#snapshot_container_2'), snapshots[1], services); 
 }
@@ -245,7 +250,7 @@ $(document).ready(async () => {
         const savedDom = await $.get('local_only/dom.json');
         const imageUrl = 'local_only/download.png';
         const snapshot = new Snapshot(savedDom, imageUrl, {a: 1, b: 2, c: 3});
-        startEditor([snapshot, snapshot]);
+        startEditor([snapshot, snapshot], services);
     } catch(e) {
         console.error('e=', e);
         reportError(e);
