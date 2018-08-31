@@ -68,7 +68,7 @@ async function findArena(lambdaClient) {
     if (arenaId) {
         const ret = await lambdaClient.lookupArenaById(arenaId);
 
-        if (!ret.id === arenaId) {
+        if (ret.id !== arenaId) {
             location.href = '?';
             return;
         }
