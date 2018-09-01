@@ -1,5 +1,6 @@
 local_only/
-package*
+package.json
+package-lock.json
 push.sh
 webpack.config.js
 
