@@ -4214,7 +4214,7 @@ eval("const drawTagger = (() => {\n    class Higligther {\n        constructor(c
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("/* WEBPACK VAR INJECTION */(function(global) {const auth = __webpack_require__(/*! ./auth.js */ \"./src/auth.js\");\nconst bootstrap = __webpack_require__(/*! ./bootstrap.js */ \"./src/bootstrap.js\");\n\n\nconst subApp = io_testim_dataplatform_fronend_subApp;\nif (subApp == 'tagging') {\n\n}\nglobal.io_testim_dataplatform_fronend_onSignIn = async () => {\n    const profile = await auth();\n    const services = await bootstrap.credentialed(profile);\n    await bootstrap.buildTaggingUi(services);\n};\n\n\n\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("/* WEBPACK VAR INJECTION */(function(global) {const auth = __webpack_require__(/*! ./auth.js */ \"./src/auth.js\");\nconst bootstrap = __webpack_require__(/*! ./bootstrap.js */ \"./src/bootstrap.js\");\n\n\nglobal.io_testim_dataplatform_fronend_onSignIn = async () => {\n    const profile = await auth();\n    const services = await bootstrap.credentialed(profile);\n    await bootstrap.buildTaggingUi(services);\n};\n\n\n\n\n/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node_modules/webpack/buildin/global.js */ \"./node_modules/webpack/buildin/global.js\")))\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
