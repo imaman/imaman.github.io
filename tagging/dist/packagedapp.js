@@ -4225,7 +4225,7 @@ eval("/* WEBPACK VAR INJECTION */(function(global) {const auth = __webpack_requi
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("async function build(services) {\n    const queryParams = (new URL(document.location)).searchParams;\n    const pageUrl = queryParams.get('pageUrl');\n    if (!pageUrl) {\n        throw new Error('Query param pageUrl is missing.')\n    }\n\n    const all = await services.lambdaClient.arenasOfPage(pageUrl);\n\n    const ul = $('#list_of_arenas');\n    all.forEach(item => {\n        ul.append(`<li>${item.pageUrl}: <a href=\"/tagging?id=${item.id}\">${item.id}</a></li>`);\n    });\n}\n\n\n\nmodule.exports = {\n    build\n};\n\n\n//# sourceURL=webpack:///./src/snapshots_ui.js?");
+eval("async function build(services) {\n    const queryParams = (new URL(document.location)).searchParams;\n    const pageUrl = queryParams.get('pageUrl');\n    if (!pageUrl) {\n        throw new Error('Query param pageUrl is missing.')\n    }\n\n    const all = await services.lambdaClient.arenasOfPage(pageUrl);\n\n    const w = $('#snapshot_wrapper');\n    const ul = w.find('.list-of-arenas');\n    all.forEach(item => {\n        ul.append(`<li>${item.pageUrl}: <a href=\"/tagging?id=${item.id}\">${item.id}</a></li>`);\n    });\n\n    w.removeClass('hidden');\n}\n\n\n\nmodule.exports = {\n    build\n};\n\n\n//# sourceURL=webpack:///./src/snapshots_ui.js?");
 
 /***/ }),
 
