@@ -79,8 +79,12 @@
     border-color: transparent;
 }
 
-.button.disabled {
+.button.placeholder {
     visibility: hidden;
+}
+
+.button.out {
+    display: none;
 }
 
 .button:hover {
