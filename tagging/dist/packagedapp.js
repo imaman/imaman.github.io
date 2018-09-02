@@ -86,6 +86,17 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "../backend/ArenaPhase.js":
+/*!********************************!*\
+  !*** ../backend/ArenaPhase.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("const ArenaPhase = {\n    UNCONFIRMED: 'UNCONFIRMED',\n    TODO: 'TODO',\n    REJECTED: 'REJECTED',\n    TAGGED: 'TAGGED'\n}\n\nmodule.exports = ArenaPhase;\n\n\n//# sourceURL=webpack:///../backend/ArenaPhase.js?");
+
+/***/ }),
+
 /***/ "./node_modules/aws-sdk/apis/acm-2015-12-08.min.json":
 /*!***********************************************************!*\
   !*** ./node_modules/aws-sdk/apis/acm-2015-12-08.min.json ***!
@@ -4223,9 +4234,9 @@ eval("/* WEBPACK VAR INJECTION */(function(global) {const auth = __webpack_requi
   !*** ./src/snapshots_ui.js ***!
   \*****************************/
 /*! no static exports found */
-/***/ (function(module, exports) {
+/***/ (function(module, exports, __webpack_require__) {
 
-eval("async function build(services) {\n    const queryParams = (new URL(document.location)).searchParams;\n    const pageUrl = queryParams.get('pageUrl');\n    if (!pageUrl) {\n        throw new Error('Query param pageUrl is missing.')\n    }\n\n    const all = await services.lambdaClient.arenasOfPage(pageUrl);\n\n    const w = $('#snapshot_wrapper');\n    const ul = w.find('.list-of-arenas');\n    all.forEach(item => {\n        ul.append(`<li>${item.pageUrl}: <a href=\"/tagging?id=${item.id}\">${item.id}</a></li>`);\n    });\n\n    w.removeClass('hidden');\n    services.reportNone();\n}\n\n\n\nmodule.exports = {\n    build\n};\n\n\n//# sourceURL=webpack:///./src/snapshots_ui.js?");
+eval("const ArenaPhase = __webpack_require__(/*! ../../backend/ArenaPhase.js */ \"../backend/ArenaPhase.js\");\n\nasync function build(services) {\n    const queryParams = (new URL(document.location)).searchParams;\n    const pageUrl = queryParams.get('pageUrl');\n    if (!pageUrl) {\n        throw new Error('Query param pageUrl is missing.')\n    }\n\n    const all = await services.lambdaClient.arenasOfPage(pageUrl);\n\n    const w = $('#snapshot_wrapper');\n\n    const phases = Object.keys(ArenaPhase);\n    phases.sort();\n    phases.forEach(phase => {\n        const lis = all\n            .filter(item => item.phase === phase)\n            .map(item => `<li>${item.pageUrl}: <a href=\"/tagging?id=${item.id}\">${item.id}</a></li>`);\n        w.append(`<h3>${phase}</h3><ul>${lis.join()}</ul>`);\n    });\n\n    w.removeClass('hidden');\n    services.reportNone();\n}\n\n\n\nmodule.exports = {\n    build\n};\n\n\n//# sourceURL=webpack:///./src/snapshots_ui.js?");
 
 /***/ }),
 
