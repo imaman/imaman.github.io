@@ -189,6 +189,11 @@
         "one         two"
 }
 
+#list_wrapper {
+    background-color: #EFD9C1;
+    grid-area: main;
+}
+
 #snapshot_wrapper.hidden {
     display: none;
 }
