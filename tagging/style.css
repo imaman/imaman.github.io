@@ -189,12 +189,16 @@
         "one         two"
 }
 
+#snapshot_wrapper.hidden {
+    display: none;
+}
+
 #list_wrapper {
     background-color: #EFD9C1;
     grid-area: main;
 }
 
-#snapshot_wrapper.hidden {
+#list_wrapper.hidden {
     display: none;
 }
 
