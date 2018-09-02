@@ -189,6 +189,10 @@
         "one         two"
 }
 
+#snapshot_wrapper.hidden {
+    display: none;
+}
+
 body {
     margin: 0;
     display: grid;
