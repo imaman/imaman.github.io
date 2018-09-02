@@ -117,6 +117,7 @@
 
 #note.notification {
     background-color: lightgoldenrodyellow;
+    padding: 10px;
 }
 
 .dismiss-widget>svg {
@@ -136,8 +137,8 @@
     background-color: #A9B7C0;
     grid-area: header;
     display: grid;
-    grid-template-columns: 200px 200px 1200px;
-    grid-template-areas: "greet signin note ...";
+    grid-template-columns: 50px 200px 200px 1200px;
+    grid-template-areas: "space signin greet note ...";
 }
 
 #side {
