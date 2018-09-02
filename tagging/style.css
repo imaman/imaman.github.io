@@ -205,6 +205,8 @@
 
 .phase-entry {
     background-color: #c7d8c6;
+    padding: 10px;
+    margin: 0px;
 }
 
 .phase-entry:nth-child(even) {
