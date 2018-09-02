@@ -195,6 +195,7 @@
 
 body {
     margin: 0;
+    font-family: Arial, sans-serif;
     display: grid;
     grid-template-columns: 50px auto 20px;
     grid-template-areas: 
@@ -202,3 +203,4 @@ body {
         "side   main   endside"
         "side   main   endside";
 }
+
