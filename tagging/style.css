@@ -196,10 +196,19 @@
 #list_wrapper {
     background-color: #EFD9C1;
     grid-area: main;
+    font-size: 24px;
 }
 
 #list_wrapper.hidden {
     display: none;
+}
+
+.phase-entry {
+    background-color: #c7d8c6;
+}
+
+.phase-entry:nth-child(even) {
+    background-color: #4CAF50;
 }
 
 body {
