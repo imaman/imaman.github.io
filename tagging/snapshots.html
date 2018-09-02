@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="372171662989-20g77o6nr3fhmuhbml2gl7i98p580p5p.apps.googleusercontent.com">
+    <title>Testim's Tagging App</title>
+    <link rel="shortcut icon" href="#" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script>
+        const io_testim_dataplatform_fronend_subApp = 'snapshots';
+    </script>
+</head>
+<body>
+    <script src="dist/packagedapp.js"></script>
+    <span id="header">
+        <span class="g-signin2 sigin-widget" data-onsuccess="io_testim_dataplatform_fronend_onSignIn" data-theme="dark"></span>
+        <span id="greet"></span>
+        <span id="note" class="everything-ok">
+            <span class="message"></span>
+            <span class="dismiss-widget">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                    <path d="M0 0h24v24H0z" fill="none" />
+                </svg>        
+            </span>
+        </span>
+    </span>    
+
+    <div id="side">
+    </div>
+
+    <div id="endside">
+    </div>
+
+
+    <div id="snapshot_wrapper" class="hidden">
+        <div id="page_header">
+            <div class="page-metadata"></div>
+            <div class="button next">Next</div>
+            <div class="button" style="visibility: hidden"></div>
+            <div class="button next-unconfirmed">Next Unconfirmed</div>
+            <div class="button confirm-arena">Confirm</div>
+        </div>
+        <div id="snapshot_container_1">
+            <div class="snapshot-header">
+                <div class="snapshot-metadata"></div>
+                <div class="button reject">Reject</div>
+            </div>
+            <div class="snapshot-view"></div>
+        </div>
+    
+        <div id="snapshot_container_2">
+            <div class="snapshot-header">
+                <div class="snapshot-metadata"></div>
+                <div class="button reject">Reject</div>
+            </div>
+            <div class="snapshot-view"></div>
+        </div>
+    </div>
+
+
+</body>
+</html>
