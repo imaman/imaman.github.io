@@ -118,6 +118,7 @@
 #note.notification {
     background-color: lightgoldenrodyellow;
     padding: 10px;
+    text-align: center;
 }
 
 .dismiss-widget>svg {
