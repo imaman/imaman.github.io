@@ -4192,7 +4192,7 @@ eval("const ArenaPhase = __webpack_require__(/*! ../../backend/ArenaPhase.js */ 
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("class SetupLocal {\n\n}\n\nSetupLocal.token = '_';\n\n\n\nmodule.exports = SetupLocal;\n\n\n//# sourceURL=webpack:///./src/SetupLocal.js?");
+eval("class SetupLocal {\n\n}\n\n\n\n\nmodule.exports = SetupLocal;\n\n\n//# sourceURL=webpack:///./src/SetupLocal.js?");
 
 /***/ }),
 
