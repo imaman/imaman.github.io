@@ -105,6 +105,14 @@
     border-color: blanchedalmond;
 }
 
+.button.nonclickable, .button.nonclickable:hover, .button.nonclickable:active {
+    background-color: gray;
+    cursor: default;
+    border-color: transparent;
+    opacity: 1.0;
+}
+
+
 
 
 #greet {
