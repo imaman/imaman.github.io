@@ -73,6 +73,12 @@
 						<p>Bigband&#39;s basic building block. Usually corresponds to an AWS resources such as: a Lambda function, a DynamoDB
 						table, a Kinesis stream, etc.</p>
 					</div>
+					<p>Naming. Inside every Section, Instruments are arranged in a tree-like hierarchy (similar to the way filews are
+						arranged in directories). This enables logical grouping of related instruments. The packageName (denoting a &quot;path
+						in the tree&quot;) is specified as an array of string: [&quot;p1&quot;, &quot;p2&quot;, &quot;p3&quot;] denotes a package nested inside the
+						[&quot;p1&quot;, &quot;p2&quot;] package. For brevity, a packageName can also be specified as a plain string: &quot;p1&quot; is equivalent to
+						[&quot;p1&quot;]. The instrument&#39;s plain name is must be unique within its package. In other words: two instruments can have
+					the same simple name if they belond to two different packages.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -145,7 +151,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L24">Instrument.ts:24</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L31">Instrument.ts:31</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -164,21 +170,12 @@
 									<h5>packageName: <span class="tsd-signature-type">string</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<div class="lead">
-											<p>the package name of the instrument. The package names allows logical
-												grouping of related instruments: can be thought of as the &quot;last name&quot; of the instrument whereas the name
-												(see _name) can be thought of as &quot;first name&quot;. Package names are hierarchical: [&quot;p1&quot;, &quot;p2&quot;, &quot;p3&quot;] is
-												nested inside [&quot;p1&quot;, &quot;p2&quot;] which, in turn, is nested inside [&quot;p1&quot;]. If a string it is treated as a single
-											element array, that is: &quot;p1&quot; is equivalent to [&quot;p1&quot;].</p>
+											<p>the package name of the instrument. See &quot;Naming&quot; above.</p>
 										</div>
 									</div>
 								</li>
 								<li>
 									<h5>_name: <span class="tsd-signature-type">string</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<div class="lead">
-											<p>the &quot;first name&quot; of the instrument</p>
-										</div>
-									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_instrument_.instrument.html" class="tsd-signature-type">Instrument</a></h4>
@@ -194,7 +191,7 @@
 					<div class="tsd-signature tsd-kind-icon">definition<span class="tsd-signature-symbol">:</span> <a href="_definition_.definition.html" class="tsd-signature-type">Definition</a><span class="tsd-signature-symbol"> =&nbsp;new Definition()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L22">Instrument.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L29">Instrument.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -204,7 +201,7 @@
 					<div class="tsd-signature tsd-kind-icon">dependencies<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Dependency</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L23">Instrument.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L30">Instrument.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -221,7 +218,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L120">Instrument.ts:120</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L124">Instrument.ts:124</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -244,7 +241,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L90">Instrument.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L94">Instrument.ts:94</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -261,7 +258,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L91">Instrument.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L95">Instrument.ts:95</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -278,7 +275,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L74">Instrument.ts:74</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L78">Instrument.ts:78</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -321,7 +318,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L89">Instrument.ts:89</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L93">Instrument.ts:93</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -347,7 +344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L88">Instrument.ts:88</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L92">Instrument.ts:92</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -370,7 +367,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L108">Instrument.ts:108</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L112">Instrument.ts:112</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -405,7 +402,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L124">Instrument.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L128">Instrument.ts:128</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <a href="_definition_.definition.html" class="tsd-signature-type">Definition</a></h4>
@@ -422,7 +419,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L93">Instrument.ts:93</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L97">Instrument.ts:97</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -439,7 +436,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L128">Instrument.ts:128</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L132">Instrument.ts:132</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -462,7 +459,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L95">Instrument.ts:95</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L99">Instrument.ts:99</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -479,7 +476,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L92">Instrument.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L96">Instrument.ts:96</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
@@ -496,7 +493,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L116">Instrument.ts:116</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L120">Instrument.ts:120</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -519,7 +516,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/c995660/packages/core/src/Instrument.ts#L57">Instrument.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/46ffee1/packages/core/src/Instrument.ts#L61">Instrument.ts:61</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
