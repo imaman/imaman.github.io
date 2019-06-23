@@ -67,6 +67,36 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<p>Bigband&#39;s unit of deployment: all instruments within a given Section will be deployed together (by using the CLI&#39;s
+							&quot;ship&quot; command). Conceptually can be thought of as a set of instruments. Note however, that a Section object does
+						not have a list of its instuments.</p>
+					</div>
+					<p>For instance, suppose you have in your Bigband several lambda functio that form your application&#39;s reccomendation
+						engine. Then you would tyically want to deploy all of these instruments together so you will place them in a
+						dedicated section called &quot;reccomendations&quot;. If you also have a staging environment, you are likely to create
+					two distinct sections &quot;reccomendations-prod&quot; and &quot;reccomendations-staging&quot;.</p>
+					<p>The decision how to separate your bigband into sections depends on your exact needs and your deployment patterns.
+						In particualr, a sections may contain instruments of different types (for instance: several Lambda instruments and
+					a DynamoDB instrument).</p>
+					<p>The deployment of a section is not atomic: while deployment takes place both the &quot;new&quot; and &quot;old&quot; version will
+						be alive (which is the typical situation in any non-monolithic distributed system). Thus, you need to write your code in
+						forward/backward compatible manner. Alternatively, you can use your source control system to break your change
+					into smaller chunks, such that each chunk changes just a single instrument, and then deploy chunk-by-chunk.</p>
+					<p>If you have an insturment that persists data and you move this instrument it acorss sections
+						its physical name (its name as AWS sees it) will change which means that the persisted data will be lost. This is an
+					inherent limitation of AWS (there is no API for renanming a DynamoDB table).</p>
+					<dl class="tsd-comment-tags">
+						<dt>export</dt>
+						<dd></dd>
+						<dt>class</dt>
+						<dd><p>Section</p>
+						</dd>
+					</dl>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -108,25 +138,50 @@
 					<a name="constructor" class="tsd-anchor"></a>
 					<h3>constructor</h3>
 					<ul class="tsd-signatures tsd-kind-constructor tsd-parent-kind-class">
-						<li class="tsd-signature tsd-kind-icon">new <wbr>Section<span class="tsd-signature-symbol">(</span>bigband<span class="tsd-signature-symbol">: </span><a href="_bigband_.bigband.html" class="tsd-signature-type">Bigband</a><span class="tsd-signature-symbol"> | </span><a href="_isolationscope_.isolationscope.html" class="tsd-signature-type">IsolationScope</a>, region<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_section_.section.html" class="tsd-signature-type">Section</a></li>
+						<li class="tsd-signature tsd-kind-icon">new <wbr>Section<span class="tsd-signature-symbol">(</span>bigband<span class="tsd-signature-symbol">: </span><a href="_bigband_.bigband.html" class="tsd-signature-type">Bigband</a>, region<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="_section_.section.html" class="tsd-signature-type">Section</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/2b93882/packages/core/src/Section.ts#L6">Section.ts:6</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/34aa8cb/packages/core/src/Section.ts#L32">Section.ts:32</a></li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an instance of Section.</p>
+								</div>
+								<dl class="tsd-comment-tags">
+									<dt>memberof</dt>
+									<dd><p>Section</p>
+									</dd>
+								</dl>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>bigband: <a href="_bigband_.bigband.html" class="tsd-signature-type">Bigband</a><span class="tsd-signature-symbol"> | </span><a href="_isolationscope_.isolationscope.html" class="tsd-signature-type">IsolationScope</a></h5>
+									<h5>bigband: <a href="_bigband_.bigband.html" class="tsd-signature-type">Bigband</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the Bigband instance that this section is part of</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>region: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the AWS region this section will be deployed at</p>
+										</div>
+									</div>
 								</li>
 								<li>
 									<h5>name: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>the name of the section. Should be unique within its Bigband</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_section_.section.html" class="tsd-signature-type">Section</a></h4>
@@ -142,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">isolation<wbr>Scope<span class="tsd-signature-symbol">:</span> <a href="_bigband_.bigband.html" class="tsd-signature-type">Bigband</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/imaman/bigband/blob/2b93882/packages/core/src/Section.ts#L6">Section.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/imaman/bigband/blob/34aa8cb/packages/core/src/Section.ts#L32">Section.ts:32</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -152,9 +207,14 @@
 					<div class="tsd-signature tsd-kind-icon">name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/imaman/bigband/blob/2b93882/packages/core/src/Section.ts#L9">Section.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/imaman/bigband/blob/34aa8cb/packages/core/src/Section.ts#L43">Section.ts:43</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the name of the section. Should be unique within its Bigband</p>
+						</div>
+					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class">
 					<a name="region" class="tsd-anchor"></a>
@@ -162,9 +222,14 @@
 					<div class="tsd-signature tsd-kind-icon">region<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/imaman/bigband/blob/2b93882/packages/core/src/Section.ts#L9">Section.ts:9</a></li>
+							<li>Defined in <a href="https://github.com/imaman/bigband/blob/34aa8cb/packages/core/src/Section.ts#L43">Section.ts:43</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>the AWS region this section will be deployed at</p>
+						</div>
+					</div>
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
@@ -179,7 +244,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/imaman/bigband/blob/2b93882/packages/core/src/Section.ts#L13">Section.ts:13</a></li>
+									<li>Defined in <a href="https://github.com/imaman/bigband/blob/34aa8cb/packages/core/src/Section.ts#L47">Section.ts:47</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
